@@ -22,6 +22,10 @@ input:focus {
     outline: none;
 }
 
+input {
+    padding-left: 10px;
+}
+
 button:focus {
     outline: none;
 }
@@ -113,8 +117,11 @@ a:hover {
     box-sizing: border-box;
 }
 
-/*admin container*/
-.admin-container, .products-container {
+/*containers*/
+.admin-container, 
+.products-container,
+.sales-attendant-container
+{
     display: grid;
     grid-template-rows: minmax(50px, auto);
     grid-row-gap: 30px;
@@ -358,14 +365,116 @@ tr {
     background: rgb(0, 60, 255);
 }
 
+.sales-attendant-second-container {
+    display: grid;
+    grid-template-columns: 1000px 220px;
+    box-sizing: border-box;
+}
+
+.cart-overall-total {
+    height: 200px;
+    padding: 30px;
+    background: #ffffff;
+    margin: 60px 0 0 -110px;
+    box-sizing: border-box;
+}
+
+.cart-overall-total h1, 
+.cart-overall-total h3 {
+    text-align: center;
+}
+
+.cart-overall-total h3 {
+    color: red;
+}
+
+/*sales attendant*/
+.sales-attendant {
+    width: 80%;
+    display: grid;
+    grid-template-rows: minmax(20px, auto);
+    grid-row-gap: 10px;
+    box-sizing: border-box;
+}
+
+.sales-attendant hr {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cart-items {
+    display: grid;
+    grid-template-columns: 150px 150px 300px;
+}
+
+.cart-form {
+    display: grid;
+    grid-template-columns: 40px 80px;
+    grid-column-gap: 110px;
+}
+
+.cart-search-form-button,
+.table-add-button,
+.cart-form-button {
+    height: 25px;
+    color: #ffffff;
+    background: rgb(0, 60, 255);
+    box-sizing: border-box;
+}
+
+.cart-details-header {
+    display: grid;
+    grid-template-columns: 150px 150px 150px 300px;
+    font-weight: bolder;
+    box-sizing: border-box;
+}
+
+
+.clear-cart-button {
+    color: #ffffff;
+    background: red;
+    height: 25px;
+    box-sizing: border-box;
+}
+
+.cart-item-quantity input {
+    width: 75px;
+    box-sizing: border-box;
+}
+
+.cart-item-total input {
+    width: 75px;
+    box-sizing: border-box;
+}
+
+.cart-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    margin: 0 0 0 -300px;
+    box-sizing: border-box;
+}
+
+.cart-buttons button {
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+
 /*media-queries*/
 @media only screen and (max-width: 1024px) {
     .header {
-        grid-column-gap: 350px;
+        grid-column-gap: 400px;
     }
 
     .attendant-form .role input {
         margin-left: -120px;
+        box-sizing: border-box;
+    }
+
+    .cart-overall-total {
+        width: 330px;
+        margin: 60px 0 0 -140px;
         box-sizing: border-box;
     }
 }
@@ -379,20 +488,32 @@ tr {
         margin-left: -75px;
         box-sizing: border-box;
     }
-}
 
-@media only screen and (max-width: 414px) {
+    .sales-attendant-second-container {
+        grid-template-columns: 1fr;
+    }
 
-    .products {
-        width: 85%;
+    .cart-overall-total {
+        margin-left: 200px;
+        margin: 30px 0 0 200px;
         box-sizing: border-box;
     }
 
+    .sales-attendant hr {
+        width: 80%;
+        margin-left: -5px;
+        box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 414px) {
     .header {
+        display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 10px;
         justify-items: center;
         padding-bottom: 20px;
+        box-sizing: border-box;
     }
 
     .header-details {
@@ -468,6 +589,122 @@ tr {
         width: 100%;
         box-sizing: border-box;
     }
+
+    .products {
+        width: 85%;
+        box-sizing: border-box;
+    }
+
+    .header {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 10px;
+        justify-items: center;
+        padding-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .header-details {
+        display: grid;
+        grid-row-gap: 10px;
+    }
+
+    .header-details a {
+        justify-self: center;
+        box-sizing: border-box;
+    }
+
+    .products-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+        box-sizing: border-box;
+    }
+
+    .single-product {
+        display: grid;
+        justify-items: center;
+    }
+
+    .products-id,
+    .products-name,
+    .products-price,
+    .products-inventory-quantity,
+    .products-minimum-quantity,
+    .products-category {
+        display: grid;
+        grid-template-columns: 150px 150px;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .sales-attendant-second-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sales-attendant {
+        width: 60%;
+        box-sizing: border-box;
+    }
+
+    .product-search {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 10px;
+    }
+
+    .product-search input[type="text"] {
+        width: 150px;
+        box-sizing: border-box;
+    }
+
+    .product-search input[type="submit"] {
+        width: 90px;
+        box-sizing: border-box;
+    }
+
+    .table-add-button {
+        margin-left: -80px;
+        box-sizing: border-box; 
+    }
+
+    .cart-details-header {
+        grid-template-columns: 70px 80px 80px 70px;
+    }
+
+    .cart-items {
+        grid-template-columns: 70px 80px 140px;
+    }
+
+    .sales-attendant {
+        width: 90%;
+    }
+
+    .cart-item-quantity {
+        margin-left: -10px;
+    }
+
+    .cart-item-total {
+        margin-left: -70px;
+    }
+
+    .cart-search-name {
+        margin-left: 70px;
+        box-sizing: border-box;
+    }
+
+    .cart-search-form-button {
+        margin-left: 100px;
+        box-sizing: border-box;
+    }
+
+    .cart-buttons {
+        margin-left: -150px;
+    }
+
+    .cart-overall-total {
+        margin-left: 50px;
+    }
 }
 
 @media only screen and (max-width: 375px) {
@@ -533,32 +770,23 @@ tr {
 
     .edit-product-form-button {
         margin-left: 130px;
-    }
-    
-    .products-details {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-row-gap: 20px;
         box-sizing: border-box;
     }
 
-    .single-product {
-        display: grid;
-        justify-items: center;
+    .sales-attendant-container .header {
+        margin-right: -40px;
     }
 
-    .products-id,
-    .products-name,
-    .products-price,
-    .products-inventory-quantity,
-    .products-minimum-quantity,
-    .products-category {
-        display: grid;
-        grid-template-columns: 150px 150px;
-        margin-top: 10px;
-        box-sizing: border-box;
+    .table-add-button {
+        height: 35px;
+    }
+
+    .cart-overall-total {
+        margin-left: 50px;
+    }
+
+    .cart-overall-total {
+        margin-left: 40px;
     }
 }
-
-
 
