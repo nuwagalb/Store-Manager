@@ -26,6 +26,10 @@ button:focus {
     outline: none;
 }
 
+tr {
+    text-align: center;
+}
+
 a {
     text-decoration: none;
     color: red;
@@ -110,7 +114,7 @@ a:hover {
 }
 
 /*admin container*/
-.admin-container {
+.admin-container, .products-container {
     display: grid;
     grid-template-rows: minmax(50px, auto);
     grid-row-gap: 30px;
@@ -209,7 +213,7 @@ a:hover {
     box-sizing: border-box;
 }
 
-/*products*/
+/*product*/
 .product-details {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -318,10 +322,46 @@ tr {
     background: rgb(207, 205, 205);
 }
 
+/*products*/
+.products {
+    width: 95%;
+    box-sizing: border-box;
+}
+
+.products-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 50px;
+    box-sizing: border-box;
+}
+
+.single-products-details {
+    display: grid;
+    grid-template-rows: minmax(10px, auto);
+    grid-row-gap: 5px;
+}
+
+.products-id,
+.products-name,
+.products-price,
+.products-inventory-quantity,
+.products-minimum-quantity,
+.products-category {
+    display: grid;
+    grid-template-columns: 230px 300px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.table-view-button {
+    color: white;
+    background: rgb(0, 60, 255);
+}
+
 /*media-queries*/
 @media only screen and (max-width: 1024px) {
     .header {
-        grid-column-gap: 400px;
+        grid-column-gap: 350px;
     }
 
     .attendant-form .role input {
@@ -342,13 +382,17 @@ tr {
 }
 
 @media only screen and (max-width: 414px) {
+
+    .products {
+        width: 85%;
+        box-sizing: border-box;
+    }
+
     .header {
-        display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 10px;
         justify-items: center;
         padding-bottom: 20px;
-        box-sizing: border-box;
     }
 
     .header-details {
@@ -486,11 +530,32 @@ tr {
         margin-left: 145px;
         box-sizing: border-box;
     }
-}
 
-@media only screen and (max-width: 375px) {
     .edit-product-form-button {
         margin-left: 130px;
+    }
+    
+    .products-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+        box-sizing: border-box;
+    }
+
+    .single-product {
+        display: grid;
+        justify-items: center;
+    }
+
+    .products-id,
+    .products-name,
+    .products-price,
+    .products-inventory-quantity,
+    .products-minimum-quantity,
+    .products-category {
+        display: grid;
+        grid-template-columns: 150px 150px;
+        margin-top: 10px;
         box-sizing: border-box;
     }
 }
