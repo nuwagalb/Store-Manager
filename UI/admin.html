@@ -104,48 +104,57 @@
                     </div>
                 </form> <!--end of add attendant form-->
 
-                <form class="edit-product-form" action="#">
-                    <h4 class="smaller-header">Edit Product</h4>
+                <div class="edit-product-details-form">
+                    <form class="edit-product-search-form">
+                        <h4 class="edit-product-search-form-item smaller-header">Edit Product</h4>
 
-                    <div class="edit-product-form-item edit-product-name">
-                        <label> Name</label>
-                        <input type="text" placeholder="Samsung Galaxy" required>
-                    </div>
+                        <div class="edit-product-search-form-item edit-product-search-name">
+                            <label>Product id/name</span></label>
+                            <input type="text" placeholder="product id or name" required>
+                            <input class="edit-product-form-button" type="submit" value="Search">
+                        </div>
+                    </form> <!--end of edit-procuct-search form-->
 
-                    <div class="edit-product-form-item edit-product-price">
-                        <label>Unit price</label>
-                        <input type="number" step="any" placeholder="1200.00" required>
-                    </div>
+                    <form class="edit-product-form" action="#">
+                        <div class="edit-product-form-item edit-product-name">
+                            <label> Name</label>
+                            <input type="text" placeholder="Samsung Galaxy" required>
+                        </div>
 
-                    <div class="edit-product-form-item edit-product-quantity">
-                        <label> Quantity</label>
-                        <input type="number" step="any" placeholder="25" required>
-                    </div>
+                        <div class="edit-product-form-item edit-product-price">
+                            <label>Unit price</label>
+                            <input type="number" step="any" placeholder="1200.00" required>
+                        </div>
 
-                    <div class="add-product-form-item edit-minimum-quantity">
-                        <label> Minimum</label>
-                        <input type="number" step="any" placeholder="minimum stock quantity" required>
-                    </div>
+                        <div class="edit-product-form-item edit-product-quantity">
+                            <label> Quantity</label>
+                            <input type="number" step="any" placeholder="25" required>
+                        </div>
 
+                        <div class="add-product-form-item edit-minimum-quantity">
+                            <label> Minimum</label>
+                            <input type="number" step="any" placeholder="minimum stock quantity" required>
+                        </div>
 
-                    <div class="edit-product-form-item edit-product-category">
-                        <label>Category</label>
-                        <select name="category" aria-roledescription="option">
-                            <option role="option" value="phones">Laptops</option>
-                            <option role="option" value="laptops" selected>Phones</option>
-                            <option role="option" value="servers">Servers</option>
-                        </select>
-                    </div>
+                        <div class="edit-product-form-item edit-product-category">
+                            <label>Category</label>
+                            <select name="category" aria-roledescription="option">
+                                <option role="option" value="phones">Laptops</option>
+                                <option role="option" value="laptops" selected>Phones</option>
+                                <option role="option" value="servers">Servers</option>
+                            </select>
+                        </div>
 
-                    <div class="edit-product-form-item edit-product-button">
-                        <input class="edit-product-form-button" type="submit" value="Edit">
-                        <button class="delete-product-button" type="submit">Delete</button>
-                    </div>
+                        <div class="edit-product-form-item edit-product-button">
+                            <input class="edit-product-form-button" type="submit" value="Edit">
+                            <button class="delete-product-button" type="submit">Delete</button>
+                        </div>
 
-                     <div class="edit-product-form-item delete-product-button">
-                        
-                    </div>
-                </form> <!--end of edit product form-->
+                        <div class="edit-product-form-item delete-product-button">
+                            
+                        </div>
+                    </form> <!--end of edit product form-->
+                </div> <!--end of edit products-details div-->
 
             </div> <!--end of product-details div-->
         </div> <!--end of product div-->
@@ -160,7 +169,7 @@
                 <form class="search-product-form" action="#">               
                     <div class="search-product-form-item search-product-name">
                         <label>Search for an attendant's records</span></label>
-                        <input type="text" placeholder="username" required>
+                        <input type="text" placeholder="user id or name" required>
                         <input class="sales-form-button" type="submit" value="Search">
                     </div>
                 </form>

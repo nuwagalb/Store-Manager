@@ -362,6 +362,30 @@ tr {
     box-sizing: border-box;
 }
 
+.edit-product-search-form h4 {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-name label {
+    margin-right: 5px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-name input[type="text"] {
+    width: 150px;
+    margin-right: 40px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-name input[type="submit"] {
+    color: #ffffff;
+    background: rgb(68, 0, 255);
+    width: 80px;
+    margin-left: -40px;
+    box-sizing: border-box;
+}
+
 .table-view-button {
     color: white;
     background: rgb(0, 60, 255);
@@ -612,25 +636,6 @@ tr {
         box-sizing: border-box;
     }
 
-    .header {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-row-gap: 10px;
-        justify-items: center;
-        padding-bottom: 20px;
-        box-sizing: border-box;
-    }
-
-    .header-details {
-        display: grid;
-        grid-row-gap: 10px;
-    }
-
-    .header-details a {
-        justify-self: center;
-        box-sizing: border-box;
-    }
-
     .products-details {
         display: grid;
         grid-template-columns: 1fr;
@@ -722,6 +727,32 @@ tr {
     .cart-overall-total {
         margin-left: 50px;
     }
+
+    .add-minimum-quantity label,
+    .edit-minimum-quantity label
+    {
+        margin-right: 80px;
+        box-sizing: border-box;
+    }
+
+    .edit-product-search-name input[type="text"] {
+        width: 180px;
+    }
+
+    .edit-product-search-name input[type="submit"] {
+        width: 115px;
+    }
+
+    .attentdant-button input{
+        margin-left: 140px;
+        box-sizing: border-box;
+    }
+
+    .clear-cart-button {
+        width: 100px;
+        box-sizing: border-box;
+    }
+
 }
 
 @media only screen and (max-width: 375px) {
@@ -804,6 +835,36 @@ tr {
 
     .cart-overall-total {
         margin-left: 40px;
+    }
+
+    .add-minimum-quantity label,
+    .edit-minimum-quantity label
+    {
+        margin-right: 50px;
+        box-sizing: border-box;
+    }
+
+    .edit-product-search-name input[type="text"] {
+         width: 135px;
+    }
+
+    .edit-product-search-name input[type="submit"] {
+        width: 115px;
+    }
+
+    .edit-product-button {
+            margin-left: 10px;
+            box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .edit-product-search-name input[type="text"] {
+        width: 125px;
+    }
+    
+    .edit-product-search-name input[type="submit"] {
+       width: 115px;
     }
 }
 
