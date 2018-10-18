@@ -1,11 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="utf-8">
-        <title>Store Manager API |Version 1</title>
+        <title>Store Manager Version 1</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     </head>
     <body>
-        <h3>My API endpoints</h3>
+        <div class="main-container">
+            <div class="main-container-item endpoints-container">
+                <div class="endpoints-container-item endpoints-header">
+                    <h1>Store Manager API</h1>
+                </div>
+                <form class="endpoints-container-item role-form">
+                    <div class="role-form-item role-details">
+                        <label>Select role to use for testing the endpoints</label>
+                        <select name="role" required>
+                            <option value="">Role</option>
+                            <option value="admin">Admin/Store Owner</option>
+                            <option value="store attendant">Store Attendant</option>
+                        </select>
+                        <input type="submit" value="Submit Role">
+                    </div>
+                </form>
+            </div>
+
+            <!--if logged in, display endpoints, else display not logged in message-->
+            <div class="main-container-item endpoint-display-container">
+                <h3>You are viewing the API endpoints as: <span class="message">{{ role }}</span> </h3>
+            </div>
+
+        </div>
     </body>
 </html>

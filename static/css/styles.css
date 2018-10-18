@@ -1,0 +1,45 @@
+body {
+    background: rgb(235, 233, 233);
+}
+
+.message {
+    color:red;
+}
+
+.main-container {
+    display: grid;
+    justify-items: center;
+}
+
+.role-form {
+    display: grid;
+    grid-row-gap: 20px;
+    justify-items: center;
+}
+
+.role-details {
+    display: grid;
+    grid-row-gap: 5px;
+}
+
+.role-details label{
+    display: block;
+}
+
+.role-details select{
+    width: 200px;
+    margin-left: 50px;
+    box-sizing: border-box;
+}
+
+.role-details input{
+    height: 25px;
+    width: 150px;
+    margin-left: 80px;
+    box-sizing: border-box;
+    background: rgb(2, 16, 139);
+    color: white;
+}
+
+
+
