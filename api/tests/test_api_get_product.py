@@ -7,9 +7,9 @@ class GetProductTestCase(unittest.TestCase):
         contains tests for the GET PRODUCT API ENDPOINT
     """
     def setUp(self):
-        """sets up a new wsgi instance and a new post request to add a product"""
+        """sets up a new wsgi instance and a new get request to get a single product"""
         self.api = api.test_client()
-        self.api.get('/api/v1/products/<productId>', content_type="application/json")
+        self.api.get('/api/v1/products/1', content_type="application/json")
 
     def test_success_code_on_get_product_with_given_product_key(self):
         """tests for success on returning a single record"""

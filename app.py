@@ -144,6 +144,25 @@ def add_sale():
         response_object = {'message':  'Invalid sale request'}
         return jsonify(response_object)
 
+#get a single sale
+@api.route("/api/v1/sales/<int:saleId>", methods=['GET'])
+def get_a_sale(saleId):
+    """returns a single product"""
+    try:
+        if not Sale.all_sales:
+            return jsonify({'message':  'There are currently no sale records'})
+
+        for sale in Sale.all_sales:
+            if sale.get('sale_id') == saleId:
+                return jsonify(sale), 200
+        
+        response_object = {'message':  'The sale does not exist'}
+        return jsonify(response_object)
+    except:
+        response_object = {'message':  'Invalid request'}
+        return jsonify(response_object)
+
+
 @api.errorhandler(404)
 def page_not_found(error):
     """displays page when 404 error code is raised"""

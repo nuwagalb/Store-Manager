@@ -7,7 +7,7 @@ class GetProductTestCase(unittest.TestCase):
         contains tests for the GET ALL PRODUCTS API ENDPOINT
     """
     def setUp(self):
-        """sets up a new wsgi instance and a new post request to add a product"""
+        """sets up a new wsgi instance and a get request to get all products"""
         self.api = api.test_client()
         self.api.get('/api/v1/products', content_type="application/json")
 
