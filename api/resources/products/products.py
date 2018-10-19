@@ -21,4 +21,10 @@ class Product:
         )
 
         return True
+
+    def get_single_product(self, product_id):
+        """returns a single product """
+        product = [product for product in Product.all_products if product.get('product_id') == product_id]
+
+        return product[0]
         

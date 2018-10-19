@@ -1,7 +1,6 @@
 import unittest
 from flask import json, jsonify, make_response
 from app import api
-from ..resources.products.products import Product
 
 class AddProductTestCase(unittest.TestCase):
     """
@@ -128,8 +127,6 @@ class AddProductTestCase(unittest.TestCase):
         """tests for successfully adding a product"""
         response = self.api.post('/api/v1/products', content_type='application/json',
                                  data=json.dumps({"name": 'Nokia 3', "price": 341.62, "quantity": 6.00}))
-
-        #data = json.loads(response.data)                   
+                 
         self.assertEqual(response.status_code, 201)
-        #self.assertEqual(data['message'], 'The product was successfully added')
         
