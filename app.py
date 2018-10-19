@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, json, jsonify
 from api.resources.products.products import Product
+from api.resources.sales.sales import Sale
 
 api = Flask(__name__)
 
@@ -70,13 +71,12 @@ def add_product():
             return jsonify(response_object), 400
 
         new_product = Product(json_data['name'], json_data['price'], json_data['quantity'])
-        product_status = new_product.add_product()
-
-        if product_status is True:
+        
+        if new_product.add_product() is True:
             added_product = Product.all_products[-1]
         return jsonify(added_product), 201
     except:
-        response_object = {'message':  'Invalid request'}
+        response_object = {'message':  'Invalid product request'}
         return jsonify(response_object)
     
 
@@ -98,7 +98,7 @@ def get_a_product(productId):
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
 
-#get a ll products
+#get all products
 @api.route("/api/v1/products", methods=['GET'])
 def get_all_products():
     """returns all products"""
@@ -108,6 +108,40 @@ def get_all_products():
         return jsonify(Product.all_products)
     except:
         response_object = {'message':  'Invalid request'}
+        return jsonify(response_object)
+
+#SALES
+#add new sale
+@api.route("/api/v1/sales", methods=['POST'])
+def add_sale():
+    """adds new sale"""
+    try:
+        json_data = request.get_json()
+
+        if 'product_id' not in json_data:
+            response_object = {'message': 'Request is missing the product id key'}
+            return jsonify(response_object), 400
+
+        if 'quantity' not in json_data:
+            response_object = {'message': 'Request is missing the sale quantity key'}
+            return jsonify(response_object), 400
+
+        if 'amount' not in json_data:
+            response_object = {'message': 'Request is missing the sale amount key'}
+            return jsonify(response_object), 400
+
+        if len(json_data.keys()) > 3:
+            response_object = {'message': 'Request has more keys than expected'}
+            return jsonify(response_object), 400
+
+        new_sale = Sale(json_data['product_id'], json_data['quantity'], json_data['amount'])
+        sale_status = new_sale.add_sale()
+        
+        if sale_status is True:
+            added_sale = Sale.all_sales[-1]
+        return jsonify(added_sale), 201
+    except:
+        response_object = {'message':  'Invalid sale request'}
         return jsonify(response_object)
 
 @api.errorhandler(404)

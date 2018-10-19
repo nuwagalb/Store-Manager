@@ -1,5 +1,5 @@
 import unittest
-from flask import json, jsonify, make_response
+from flask import json, jsonify
 from app import api
 
 class AddProductTestCase(unittest.TestCase):
