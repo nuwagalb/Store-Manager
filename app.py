@@ -69,9 +69,9 @@ def add_product():
         if json_data.get('quantity') <= 0.00:
             response_object = {'message':  'The quantity of the product cannot be zero or less than zero'}
             return jsonify(response_object), 400
-
+            
         new_product = Product(json_data['name'], json_data['price'], json_data['quantity'])
-        
+
         if new_product.add_product() is True:
             added_product = Product.all_products[-1]
         return jsonify(added_product), 201
@@ -162,6 +162,17 @@ def get_a_sale(saleId):
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
 
+#get all sales
+@api.route("/api/v1/sales", methods=['GET'])
+def get_all_sales():
+    """returns all sales"""
+    try:
+        if not get_all_sales:
+            return jsonify({'message':  'There are currently no sale records'})
+        return jsonify(Sale.all_sales)
+    except:
+        response_object = {'message':  'Invalid request'}
+        return jsonify(response_object)
 
 @api.errorhandler(404)
 def page_not_found(error):

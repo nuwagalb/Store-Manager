@@ -129,4 +129,3 @@ class AddProductTestCase(unittest.TestCase):
                                  data=json.dumps({"name": 'Nokia 3', "price": 341.62, "quantity": 6.00}))
                  
         self.assertEqual(response.status_code, 201)
-        

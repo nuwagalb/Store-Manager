@@ -12,7 +12,7 @@ class GetSaleTestCase(unittest.TestCase):
         self.api.get('/api/v1/sales/1', content_type="application/json")
 
     def test_success_code_on_get_sale_with_given_product_key(self):
-        """tests for success on returning a single record"""
+        """tests for success on returning all product lessons"""
         response = self.api.get('/api/v1/sales/1', content_type='application/json')
         self.assertEqual(response.status_code, 200)
     

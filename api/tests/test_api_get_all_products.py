@@ -2,7 +2,7 @@ import unittest
 from flask import json, jsonify, make_response
 from app import api
 
-class GetProductTestCase(unittest.TestCase):
+class GetAllProductsTestCase(unittest.TestCase):
     """
         contains tests for the GET ALL PRODUCTS API ENDPOINT
     """
