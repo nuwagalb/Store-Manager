@@ -6,6 +6,37 @@ body {
     color:red;
 }
 
+.visitor-message {
+    margin-top: 50px;
+    margin-left: 150px;
+    box-sizing: border-box;
+}
+
+.role-title {
+    margin-left: 350px;
+}
+
+.endpoint-display-container h3 {
+    margin-left: 130px;
+}
+
+th {
+    color: blue;
+    width: 300px;
+    box-sizing: border-box;
+}
+
+td {
+    text-align: center;
+    width: 350px;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+}
+
 .main-container {
     display: grid;
     justify-items: center;

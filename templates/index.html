@@ -12,7 +12,7 @@
                 </div>
                 <form class="endpoints-container-item role-form">
                     <div class="role-form-item role-details">
-                        <label>Select role to use for testing the endpoints</label>
+                        <label>Select role to use for viewing the endpoints</label>
                         <select name="role" required>
                             <option value="">Role</option>
                             <option value="admin">Admin/Store Owner</option>
@@ -25,7 +25,74 @@
 
             <!--if logged in, display endpoints, else display not logged in message-->
             <div class="main-container-item endpoint-display-container">
-                <h3>You are viewing the API endpoints as: <span class="message">{{ role }}</span> </h3>
+                <h3>End points and the roles that have access to them</h3>
+                {% if role == 'Visitor'  %}
+                    <p class="message visitor-message">Your need to select a role inorder to test the endpoints</p>
+                {% endif %}
+
+                {% if role == 'admin' %}
+                    <p class="role-title">Role: <span class="message">{{ role }}</span> </p>
+                   <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>End Point</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td>POST /api/v1/products</td>
+                                <td>Add new product</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/products/&ltproductId&gt</td>
+                                <td>Get a single product</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/products</td>
+                                <td>Get all products</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/sales/&ltsaleId&gt</td>
+                                <td>Get a single sale</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/sales</td>
+                                <td>Get all sales</td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                {% endif %}
+
+                {% if role == 'store attendant' %}
+                    <p class="role-title">Role: <span class="message">{{ role }}</span> </p>
+                   <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>End Point</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td>POST /api/v1/sales</td>
+                                <td>Add new sale</td>
+                            </tr>
+                             <tr>
+                                <td>GET /api/v1/sales/&ltsaleId&gt</td>
+                                <td>Get a single sale</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/products/&ltproductId&gt</td>
+                                <td>Get a single product</td>
+                            </tr>
+                            <tr>
+                                <td>GET /api/v1/products</td>
+                                <td>Get get all products</td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                {% endif %}
             </div>
 
         </div>
