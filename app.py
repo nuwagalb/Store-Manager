@@ -98,6 +98,18 @@ def get_a_product(productId):
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
 
+#get a ll products
+@api.route("/api/v1/products", methods=['GET'])
+def get_all_products():
+    """returns all products"""
+    try:
+        if not Product.all_products:
+            return jsonify({'message':  'There are currently no product records'})
+        return jsonify(Product.all_products)
+    except:
+        response_object = {'message':  'Invalid request'}
+        return jsonify(response_object)
+
 @api.errorhandler(404)
 def page_not_found(error):
     """displays page when 404 error code is raised"""
