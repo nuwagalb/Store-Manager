@@ -19,9 +19,8 @@ def index():
 @api.route("/api/v1/products", methods=['POST'])
 def add_product():
     """adds new product"""
+    json_data = request.get_json()
     try:
-        json_data = request.get_json()
-
         if 'name' not in json_data:
             response_object = {'message': 'Request is missing the product name key'}
             return jsonify(response_object), 400
@@ -75,6 +74,8 @@ def add_product():
         if new_product.add_product() is True:
             added_product = Product.all_products[-1]
         return jsonify(added_product), 201
+
+        return "Hello"
     except:
         response_object = {'message':  'Invalid product request'}
         return jsonify(response_object)
@@ -115,9 +116,9 @@ def get_all_products():
 @api.route("/api/v1/sales", methods=['POST'])
 def add_sale():
     """adds new sale"""
-    try:
-        json_data = request.get_json()
+    json_data = request.get_json()
 
+    try:
         if 'product_id' not in json_data:
             response_object = {'message': 'Request is missing the product id key'}
             return jsonify(response_object), 400
@@ -167,7 +168,7 @@ def get_a_sale(saleId):
 def get_all_sales():
     """returns all sales"""
     try:
-        if not get_all_sales:
+        if not Sale.all_sales:
             return jsonify({'message':  'There are currently no sale records'})
         return jsonify(Sale.all_sales)
     except:
