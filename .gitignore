@@ -17,3 +17,17 @@ api/users/__init__.pyc
 api/users/users.pyc
 .cache
 models/__pycache__
+app.pyc
+api/views.pyc
+models/__init__.pyc
+models/products.pyc
+models/sales.pyc
+models/users.pyc
+tests/test_api_add_products.pyc
+tests/test_api_add_sale.pyc
+tests/test_api_get_all_products.pyc
+tests/test_api_get_all_sales.pyc
+tests/test_api_get_product.pyc
+tests/test_api_get_sale.pyc
+tests/test_products.pyc
+tests/test_sales.pyc

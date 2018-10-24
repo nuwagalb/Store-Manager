@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, json, jsonify
 from models.products import Product
 from models.sales import Sale
-from models.users import User
+#from models.users import User
 
 api = Flask(__name__)
 
