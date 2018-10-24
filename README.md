@@ -59,5 +59,5 @@ $ python app.py
 #### Now that the server is running , open your browser and run one of the links below.
 
 $ localhost:5000 or 127.0.0.1:5000
-You can now test out the links using Postman API Development and Testing tool
+- You can now test out the endpoints using Postman API Development and Testing tool
 
