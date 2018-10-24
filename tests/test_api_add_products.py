@@ -1,6 +1,6 @@
 import unittest
 from flask import json, jsonify
-from app import api
+from api.views import api
 
 class AddProductTestCase(unittest.TestCase):
     """

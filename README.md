@@ -48,9 +48,10 @@ $ pip install -r requirements.txt
 
 $ pytest
 
-#### or for detailed output on unit tests run with verbose.
+#### or for detailed output on unit tests run.
 
-$ py.test --cov=api api/tests/
+$ py.test --cov=api tests/
+
 #### To run the application invoke the command below.
 
 $ python app.py

@@ -1,5 +1,5 @@
 import unittest
-from ..resources.sales.sales import Sale
+from models.sales import Sale
 
 class SaleTestCase(unittest.TestCase):
     """

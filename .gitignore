@@ -16,3 +16,4 @@ api/validators/__init__.pyc
 api/users/__init__.pyc
 api/users/users.pyc
 .cache
+models/__pycache__

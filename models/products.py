@@ -1,6 +1,6 @@
 class Product:
     """Class that handles all the actions that can be performed
-       on a Product such as: creating a new product, viewing details 
+       on a Product such as: creating a new product, viewing details
        of a product, updating a product's details and deleting a product
     """
     all_products = []
@@ -10,7 +10,7 @@ class Product:
         (self.name, self.price, self.quantity) = (name, price, quantity)
 
     def add_product(self):
-        """adds product record to """
+        """adds a product record"""
         if not Product.all_products:
             product_id = 1
         else:
