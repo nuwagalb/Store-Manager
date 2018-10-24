@@ -1,0 +1,7 @@
+__pycache__
+.pytest_cache
+api
+models
+tests
+app.pyc
+venv

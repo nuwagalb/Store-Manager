@@ -1,10 +1,12 @@
 html, body, h1, h2, h3, h4, p {
     margin: 0;
     padding: 0;
+    font-family: 'Hind Siliguri', sans-serif;
+    color: #999999;
 }
 
 body {
-    background: rgba(89, 90, 90, 0.308);
+    background:#efefef;
 }
 
 /* global */
@@ -34,11 +36,11 @@ tr {
 
 a {
     text-decoration: none;
-    color: red;
+    color:#ffffff;
 }
 
 a:hover {
-    color: blue;
+    color:#0089ce;
 }
 
 .align-left {
@@ -49,12 +51,25 @@ a:hover {
 }
 
 .minor-header {
-    color: red;
+    color:#222222;
 }
 
 .smaller-header {
-    color: rgb(122, 98, 255);
+    color: #003263;
 }
+
+table {
+    border: 1px solid grey;
+}
+
+thead {
+    background: grey;
+    color: white;
+}
+
+table tr{
+    border: 1px solid grey;
+} 
 
 /* login-container*/
 .login-container {
@@ -67,16 +82,20 @@ a:hover {
 
 /* logo */
 .logo {
-    background: black;
+    background:#003263;
     color: #ffffff;
     margin-top: 60px;
     padding: 30px;
     box-sizing: border-box;
 }
 
+.logo h3 {
+    color: white;
+}
+
 .login-title h1 {
     text-align: center;
-    color: red;
+    color:#222222;
 }
 
 /* form */
@@ -107,7 +126,8 @@ a:hover {
 .login-form-button {
     width: 100%;
     height: 50px;
-    background: rgba(89, 90, 90, 0.308);
+    background: #0089ce;
+    color: white;
     width: 100%;
     box-sizing: border-box;
 }
@@ -115,6 +135,8 @@ a:hover {
 /*containers*/
 .admin-container, 
 .products-container,
+.sales-container,
+.attendants-container,
 .sales-attendant-container
 {
     display: grid;
@@ -126,10 +148,9 @@ a:hover {
 /*header*/
 .header {
     display: grid;
-    grid-column-gap: 600px;
+    grid-column-gap: 300px;
     grid-template-columns: 1fr 1fr;
-    background: rgb(48, 47, 47);
-    color: white;
+    background: #003263;
     padding: 15px 0 0 30px;
     box-sizing: border-box;
 }
@@ -145,6 +166,10 @@ a:hover {
 .header-details a {
     padding-left: 20px;
     box-sizing: border-box;
+}
+
+.header h3 {
+    color: white;
 }
 
 /*attendant*/
@@ -209,7 +234,7 @@ a:hover {
 .attendant-form-button, 
 .add-product-form-button {
     color: #ffffff;
-    background: rgb(68, 0, 255);
+    background: #0089ce;
     font-weight: bolder;
     margin-left: 172px;
     box-sizing: border-box;
@@ -297,7 +322,7 @@ a:hover {
     box-sizing: border-box;
 }
 
-.search-product-form {
+.search-product-form, .search-sales-form {
     margin-top: 10px;
 }
 
@@ -332,15 +357,15 @@ tr {
 }
 
 /*products*/
-.products {
+.products, .sales, .attendants {
     width: 95%;
     box-sizing: border-box;
 }
 
-.products-details {
+.products-details, .sales-details {
+    margin-top: 30px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 50px;
+    grid-template-columns: 1fr;
     box-sizing: border-box;
 }
 
@@ -348,6 +373,78 @@ tr {
     display: grid;
     grid-template-rows: minmax(10px, auto);
     grid-row-gap: 5px;
+    justify-items: center;
+    margin-left: 250px;
+    box-sizing: border-box;
+}
+
+.add-single-product {
+    margin-top: 30px;
+    margin-left: 330px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-name input{
+    margin-left: 51px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-name input{
+    margin-left: 90px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-quantity input{
+    margin-left: 30px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-email input{
+    margin-left: 125px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-minimum-quantity input{
+    margin-left: 24px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-password input{
+    margin-left: 92px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-confirm-password input{
+    margin-left: 24px;
+    box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.add-product-form .role input {
+    margin-left: -123px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-category select {
+    width: 335px;
+    margin-left: 25px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-button {
+    margin-left: 7px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-form-button {
+    margin-left: 163px;
+    box-sizing: border-box;
+}
+
+.add-single-product input {
+    width: 335px;
+    height: 35px;
+    box-sizing: border-box;
 }
 
 .products-id,
@@ -375,20 +472,57 @@ tr {
 .edit-product-search-name input[type="text"] {
     width: 150px;
     margin-right: 40px;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 
 .edit-product-search-name input[type="submit"] {
     color: #ffffff;
-    background: rgb(68, 0, 255);
+    background: #0089ce;
     width: 80px;
     margin-left: -40px;
+    box-sizing: border-box;
+}
+
+.products-rows > tr:nth-child(odd), .sales-rows > tr:nth-child(odd){
+    background: rgb(207, 205, 205);
+}
+
+.single-product-title, .single-attendant-title {
+    text-align: center;
+}
+
+.other-product-operations, .other-sales-operations {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 315px;
+    box-sizing: border-box;
+}
+
+.products-search-form input, .sales-search-form input{
+    height: 30px;
     box-sizing: border-box;
 }
 
 .table-view-button {
     color: white;
     background: rgb(0, 60, 255);
+    width: 120px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.add-products-button, .add-attendant-form-button {
+    color: white;
+    background: rgb(0, 60, 255);
+    width: 120px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.add-products-div {
+    margin-top: 10px;
+    box-sizing: border-box;
 }
 
 .sales-attendant-second-container {
@@ -636,7 +770,7 @@ tr {
         box-sizing: border-box;
     }
 
-    .products-details {
+    .products-details, .sales-details {
         display: grid;
         grid-template-columns: 1fr;
         grid-row-gap: 20px;
