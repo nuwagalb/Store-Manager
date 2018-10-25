@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="grid-item logo">
+            <h3>Store Manager</h3>
+        </div>
+
+        <div class="grid-item login-title">
+            <h1>Log in</h1>
+        </div>
+
+        <form id="login-form" class="grid-item login-form" action="#" 
+            method="POST" onsubmit="return DisplayLoginResults()">
+
+            <div class="login-form-item email-address">
+                <label>Enter your email address <span>*</span></label>
+                <input class="input-style" type="email" placeholder="Email" required>
+            </div>
+
+            <div class="login-form-item password">
+                <label>Enter your password <span>*</span></label>
+                <input class="input-style" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="login-form-item user-role">
+                <label>Enter your role</label>
+                <select id="login-role" name="role" aria-roledescription="option" required>
+                    <option role="option" value="">Role</option>
+                    <option role="option" value="admin">Admin</option>
+                    <option role="option" value="attendant">Sale attendant</option>
+                </select>
+            </div>
+
+            <div class="login-form-item login-button">
+                <input class="login-form-button" type="submit" value="Login">
+            </div>
+        </form>
+    </div> <!-- end of container div-->
+</body>
+</html>

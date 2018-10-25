@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store Manager | Sales Attendant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="sales-attendant-container">
+        <div class="grid-item header">
+            <h3>Store Manager | Attendant</h3>
+            <div class="header-details">
+                <a href="shopping-cart.html">Shopping cart</a>
+                <a href="attendant_product_list.html">Products</a>
+                <a href="view_all_sales.html">Sales</a>
+                <a href="index.html">Log out</a>
+            </div>
+        </div>
+        <div class="grid-item sales-attendant-second-container">
+            <div class="sales-attendant-second-container-item sales-attendant align-left">
+                <div class="sales-attendant-item cart-header">
+                    <h3 class="minor-header">Shopping Cart</h3>
+                    <hr />
+                </div>
+
+                <div class="sales-attendant-item cart-search-form">
+                    <form class="search-product-form" action="#">               
+                        <div class="cart-search-form-item product-search">
+                            <label>Search for a product to add to the cart</span></label>
+                            <input class="cart-search-name" type="text" placeholder="product id or name" required>
+                            <input class="cart-search-form-button" type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="sales-attendant-item cart-search-header">
+                    <h4 class="minor-header">Search results</h4>
+                </div>
+
+                <div class="sales-attendant-item cart-search-results">
+                    <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>Product id</th>
+                                <th>Product Name</th>
+                                <th>Quantity in stock</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td>10289</td>
+                                <td>Nokia 3</td>
+                                <td>45</td>
+                                <td><button class="table-add-button" type="submit">Add to Cart</button></td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                </div>
+
+                <div class="sales-attendant-item cart-items-header">
+                    <h4 class="minor-header">Cart details</h4>
+                </div>
+
+                <div class="sales-attendant-item cart-details-header">
+                    <p>Product</p>
+                    <p>Unit price (usd)</p>
+                    <p>Quantity</p>
+                    <p>Total</p>
+                </div>
+
+                <div class="sales-attendant-item cart-items">
+                    <div class="cart-items-item search-product-name">
+                        <p>Nokia 3</p>
+                    </div>
+
+                    <div class="cart-items-item search-product-unit-price">
+                        <p>230</p>
+                    </div>
+
+                    <form class="cart-items-item cart-form" action="#">               
+                        <div class="cart-form-item cart-item-quantity">
+                            <input type="number" placeholder="quantity" required>
+                        </div>
+                        
+                        <div class="cart-form-item cart-item-total">
+                            <p>230</p>
+                        </div>
+
+                        <div class="cart-form-item cart-buttons">
+                            <input class="cart-form-button" type="submit" value="Create sales Record">
+                            <button class="clear-cart-button">Clear cart</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="sales-attendant-item sales-header">
+                    <h3 class="minor-header">Sales records</h3>
+                    <hr />
+                </div>
+
+                <div class="sales-attendant-item cart-sales-records">
+                    <table class="sales-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>Sales no</th>
+                                <th>Date created </th>
+                                <th>Total amount (Usd)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="sales-rows">
+                            <tr>
+                                <td>134556</td>
+                                <td>11-10-2018</td>
+                                <td>5000.00</td>
+                            </tr>
+                            <tr>
+                                <td>134557</td>
+                                <td>11-10-2018</td>
+                                <td>2340.00</td>
+                            </tr>
+                            <tr>
+                                <td>134558</td>
+                                <td>11-10-2018</td>
+                                <td>340.00</td>
+                            </tr>
+                        </tbody>
+                    </table>   
+                </div>
+            </div> <!--end of sales attendant div-->
+
+            <div class="sales-attendant-second-container-item cart-overall-total">
+                <h1>Cart Total</h1>
+                <h3>5670.56</h3>
+            </div>
+        </div> <!--end of sales attendant second div--> 
+        
+        <div class="grid-item"></div>
+
+    </div> <!-- end of products container div-->
+</body>
+</html>

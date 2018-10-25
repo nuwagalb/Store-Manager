@@ -1,0 +1,1084 @@
+html, body, h1, h2, h3, h4, p {
+    margin: 0;
+    padding: 0;
+    font-family: 'Hind Siliguri', sans-serif;
+    color: #999999;
+}
+
+body {
+    background:#efefef;
+}
+
+/* global */
+input[type="submit"] {
+    font-size: 14px;
+}
+
+label {
+    font-weight: bolder;
+}
+
+input:focus {
+    outline: none;
+}
+
+input {
+    padding-left: 10px;
+}
+
+button:focus {
+    outline: none;
+}
+
+tr {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    color:#ffffff;
+}
+
+a:hover {
+    color:#0089ce;
+}
+
+.align-left {
+    margin-left: 30px;
+    padding: 30px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+.minor-header {
+    color:#222222;
+}
+
+.smaller-header {
+    color: #003263;
+}
+
+table {
+    border: 1px solid grey;
+}
+
+thead {
+    background: grey;
+    color: white;
+}
+
+table tr{
+    border: 1px solid grey;
+} 
+
+/* login-container*/
+.login-container {
+    display: grid;
+    grid-auto-rows: minmax(20px, auto);
+    grid-row-gap: 20px;
+    justify-items: center;
+    box-sizing: border-box;
+}
+
+/* logo */
+.logo {
+    background:#003263;
+    color: #ffffff;
+    margin-top: 60px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.logo h3 {
+    color: white;
+}
+
+.login-title h1 {
+    text-align: center;
+    color:#222222;
+}
+
+/* form */
+.login-form {
+    width: 30%;
+    box-sizing: border-box;
+}
+
+.login-form label {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.login-form label span {
+    color: red;
+}
+
+.login-form input{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.login-form select{
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+    text-align: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.user-role select {
+    padding-left: 170px;
+    color: #999999;
+    box-sizing: border-box;
+}
+
+.login-form-button {
+    width: 100%;
+    height: 50px;
+    background: #0089ce;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/*containers*/
+.admin-container, 
+.products-container,
+.sales-container,
+.attendants-container,
+.sales-attendant-container
+{
+    display: grid;
+    grid-template-rows: minmax(50px, auto);
+    grid-row-gap: 30px;
+    justify-self: left;
+}
+
+/*header*/
+.header {
+    display: grid;
+    grid-column-gap: 300px;
+    grid-template-columns: 1fr 1fr;
+    background: #003263;
+    padding: 15px 0 0 30px;
+    box-sizing: border-box;
+}
+
+.header-details {
+    font-size: 16px;
+}
+
+.header-details p {
+    display: inline;
+}
+
+.header-details a {
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.header h3 {
+    color: white;
+}
+
+/*attendant*/
+.attendant, .product, .sales {
+    width: 90%;
+    box-sizing: border-box;
+}
+
+/*attendant-details*/
+.attendant-details h4{
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+/*attendant form*/
+.attendant-form, 
+.add-product-form,
+.edit-product-form {
+    display: grid;
+    grid-template-rows: minmax(20px, auto);
+    grid-row-gap: 10px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.attendant-form input, 
+.add-product-form input,
+.edit-product-form input {
+    padding-left: 10px;
+    width: 40%;
+    height: 25px;
+    box-sizing: border-box;
+}
+
+.attendant-form .username input {
+    margin-left: 100px;
+    box-sizing: border-box;
+}
+
+.attendant-form .email-address input,
+.add-product-form .add-product-price input {
+    margin-left: 128px;
+    box-sizing: border-box;
+}
+
+.attendant-form .password input {
+    margin-left: 103px;
+    box-sizing: border-box;
+}
+
+.attendant-form .confirm-password input {
+    margin-left: 40px;
+    box-sizing: border-box;
+}
+
+.attendant-form .role input {
+    height: 15px;
+    margin-left: -165px;
+    box-sizing: border-box;
+}
+
+.attendant-form-button, 
+.add-product-form-button {
+    color: #ffffff;
+    background: #0089ce;
+    font-weight: bolder;
+    margin-left: 172px;
+    box-sizing: border-box;
+}
+
+/*product*/
+.product-details {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+}
+
+.add-product-form, .edit-product-form {
+    display: grid;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.add-product-form input {
+    width: 40%;
+    box-sizing: border-box;
+}
+
+.add-product-form .add-product-name input,
+.edit-product-form .edit-product-name input
+ {
+    margin-left: 50px;
+    box-sizing: border-box;
+}
+
+.add-product-form .add-product-price input,
+.edit-product-form .edit-product-price input
+ {
+    margin-left: 21px;
+    box-sizing: border-box;
+}
+
+.add-product-form .add-product-quantity input,
+.edit-product-form .edit-product-quantity input
+ {
+    margin-left: 29px;
+    box-sizing: border-box;
+}
+
+.add-product-form .add-minimum-quantity input,
+.edit-product-form .edit-minimum-quantity input
+ {
+    margin-left: 22px;
+    box-sizing: border-box;
+}
+
+.add-product-form .add-product-category select,
+.edit-product-form .edit-product-category select {
+    margin-left: 27px;
+    width: 40%;
+    height: 25px;
+    box-sizing: border-box;
+}
+
+.add-product-form-button, .edit-product-form-button {
+    margin-left: 92px;
+    box-sizing: border-box;
+}
+
+.edit-product-button .edit-product-form-button {
+    color: #ffffff;
+    background: rgb(0, 60, 255);
+    font-weight: bolder;
+    width: 21%;
+    box-sizing: border-box;
+}
+
+.edit-product-button .delete-product-button {
+    color: white;
+    font-weight: bolder;
+    background: red;
+    height: 25px;
+    box-sizing: border-box;
+}
+
+/*sales*/
+.sales-details {
+    display: grid;
+    grid-template-rows: minmax(30px, auto);
+    grid-row-gap: 20px;
+    box-sizing: border-box;
+}
+
+.search-product-form, .search-sales-form {
+    margin-top: 10px;
+}
+
+.search-product-name input[type="text"] {
+    width: 30%;
+    height: 25px;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.sales-form-button {
+    width: 10%;
+    height: 25px;
+    color: #ffffff;
+    background: rgb(0, 60, 255);
+    font-weight: bolder;
+    box-sizing: border-box;
+}
+
+/*sales table*/
+.sales-table {
+    width: 72%;
+    box-sizing: border-box;
+}
+
+tr {
+    text-align: center;
+}
+
+.sales-rows > tr:nth-child(odd){
+    background: rgb(207, 205, 205);
+}
+
+/*products*/
+.products, .sales, .attendants {
+    width: 95%;
+    box-sizing: border-box;
+}
+
+.products-details, .sales-details {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr;
+    box-sizing: border-box;
+}
+
+.single-products-details {
+    display: grid;
+    grid-template-rows: minmax(10px, auto);
+    grid-row-gap: 5px;
+    justify-items: center;
+    margin-left: 250px;
+    box-sizing: border-box;
+}
+
+.add-single-product {
+    margin-top: 30px;
+    margin-left: 330px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-name input{
+    margin-left: 51px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-name input{
+    margin-left: 90px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-quantity input{
+    margin-left: 30px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-email input{
+    margin-left: 125px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-minimum-quantity input{
+    margin-left: 24px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-password input{
+    margin-left: 92px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-confirm-password input{
+    margin-left: 24px;
+    box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.add-product-form .role input {
+    margin-left: -123px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-category select {
+    width: 335px;
+    margin-left: 25px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-product-button {
+    margin-left: 7px;
+    box-sizing: border-box;
+}
+
+.add-single-product .add-attendant-form-button {
+    margin-left: 163px;
+    box-sizing: border-box;
+}
+
+.add-single-product input {
+    width: 335px;
+    height: 35px;
+    box-sizing: border-box;
+}
+
+.products-id,
+.products-name,
+.products-price,
+.products-inventory-quantity,
+.products-minimum-quantity,
+.products-category {
+    display: grid;
+    grid-template-columns: 230px 300px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-form h4 {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-name label {
+    margin-right: 5px;
+    box-sizing: border-box;
+}
+
+.edit-product-search-name input[type="text"] {
+    width: 150px;
+    margin-right: 40px;
+    box-sizing: border-box; 
+}
+
+.edit-product-search-name input[type="submit"] {
+    color: #ffffff;
+    background: #0089ce;
+    width: 80px;
+    margin-left: -40px;
+    box-sizing: border-box;
+}
+
+.products-rows > tr:nth-child(odd), .sales-rows > tr:nth-child(odd){
+    background: rgb(207, 205, 205);
+}
+
+.single-product-title, .single-attendant-title {
+    text-align: center;
+}
+
+.other-product-operations, .other-sales-operations {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 315px;
+    box-sizing: border-box;
+}
+
+.products-search-form input, .sales-search-form input{
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.table-view-button {
+    color: white;
+    background: rgb(0, 60, 255);
+    width: 120px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.add-products-button, .add-attendant-form-button {
+    color: white;
+    background: rgb(0, 60, 255);
+    width: 120px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.add-products-div {
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.sales-attendant-second-container {
+    display: grid;
+    grid-template-columns: 1000px 220px;
+    box-sizing: border-box;
+}
+
+.cart-overall-total {
+    height: 200px;
+    padding: 30px;
+    background: #ffffff;
+    margin: 60px 0 0 -110px;
+    box-sizing: border-box;
+}
+
+.cart-overall-total h1, 
+.cart-overall-total h3 {
+    text-align: center;
+}
+
+.cart-overall-total h3 {
+    color: red;
+}
+
+/*sales attendant*/
+.sales-attendant {
+    width: 80%;
+    display: grid;
+    grid-template-rows: minmax(20px, auto);
+    grid-row-gap: 10px;
+    box-sizing: border-box;
+}
+
+.sales-attendant hr {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cart-items {
+    display: grid;
+    grid-template-columns: 150px 150px 300px;
+}
+
+.cart-form {
+    display: grid;
+    grid-template-columns: 40px 80px;
+    grid-column-gap: 110px;
+}
+
+.cart-search-form-button,
+.table-add-button,
+.cart-form-button {
+    height: 25px;
+    color: #ffffff;
+    background: rgb(0, 60, 255);
+    box-sizing: border-box;
+}
+
+.cart-details-header {
+    display: grid;
+    grid-template-columns: 150px 150px 150px 300px;
+    font-weight: bolder;
+    box-sizing: border-box;
+}
+
+
+.clear-cart-button {
+    color: #ffffff;
+    background: red;
+    height: 25px;
+    box-sizing: border-box;
+}
+
+.cart-item-quantity input {
+    width: 75px;
+    box-sizing: border-box;
+}
+
+.cart-item-total input {
+    width: 75px;
+    box-sizing: border-box;
+}
+
+.cart-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    margin: 0 0 0 -300px;
+    box-sizing: border-box;
+}
+
+.cart-buttons button {
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.cart-search-form {
+    margin-top: -10px;
+    box-sizing: border-box;
+}
+
+.cart-form-button {
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+.sales-header {
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
+
+/*media-queries*/
+@media only screen and (max-width: 1024px) {
+    .header {
+        grid-column-gap: 250px;
+    }
+
+    .attendant-form .role input {
+        margin-left: -120px;
+        box-sizing: border-box;
+    }
+
+    .cart-overall-total {
+        width: 330px;
+        margin: 60px 0 0 -140px;
+        box-sizing: border-box;
+    }
+
+    .other-product-operations {
+        grid-template-columns: 2fr 1fr;
+        box-sizing: border-box;
+    }
+
+    .add-product-form {
+        margin-left: -100px;
+        box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .header {
+        grid-column-gap: 0;
+    }
+
+    .attendant-form .role input {
+        margin-left: -75px;
+        box-sizing: border-box;
+    }
+
+    .sales-attendant-second-container {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-overall-total {
+        margin-left: 200px;
+        margin: 30px 0 0 200px;
+        box-sizing: border-box;
+    }
+
+    .sales-attendant hr {
+        width: 80%;
+        margin-left: -5px;
+        box-sizing: border-box;
+    }
+
+    .other-product-operations {
+        grid-template-columns: 1fr;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .other-product-operations, .add-products-div {
+        margin-top: 20px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form {
+        margin-left: -220px;
+        box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .header {
+        grid-template-columns: 1fr;
+        grid-row-gap: 10px;
+        justify-items: center;
+        padding-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .header-details {
+        display: grid;
+        grid-row-gap: 10px;
+    }
+
+    .header-details a {
+        justify-self: center;
+        box-sizing: border-box;
+    }
+
+    .attendant-form .role input {
+        margin-left: -10px;
+        box-sizing: border-box;
+    }
+
+    .product-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+    }
+
+    .add-product-form .add-product-name input,
+    .edit-product-form .edit-product-name input {
+        margin-left: 130px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-price input,
+    .edit-product-form .edit-product-price input {
+        margin-left: 102px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-quantity input,
+    .edit-product-form .edit-product-quantity input {
+        margin-left: 110px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-category select,
+    .edit-product-form .edit-product-category select {
+        margin-left: 106px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form-button, .edit-product-form-button {
+        margin-left: 175px;
+        box-sizing: border-box;
+    }
+
+    .search-product-name {
+        display: grid;
+        grid-row-gap: 10px;
+        justify-items: center;
+        box-sizing: border-box;
+    }
+
+    .search-product-name input[type="text"] {
+        width: 35%;
+        text-align: center;
+        padding-left: 0;
+        box-sizing: border-box;
+    }
+
+    .sales-form-button{
+        width: 20%;
+        box-sizing: border-box;
+    }
+
+    .sales-table {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .products {
+        width: 85%;
+        box-sizing: border-box;
+    }
+
+    .products-details, .sales-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 20px;
+        box-sizing: border-box;
+    }
+
+    .single-product {
+        display: grid;
+        justify-items: center;
+    }
+
+    .products-id,
+    .products-name,
+    .products-price,
+    .products-inventory-quantity,
+    .products-minimum-quantity,
+    .products-category {
+        display: grid;
+        grid-template-columns: 150px 150px;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .sales-attendant-second-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sales-attendant {
+        width: 60%;
+        box-sizing: border-box;
+    }
+
+    .product-search {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 10px;
+    }
+
+    .product-search input[type="text"] {
+        width: 150px;
+        box-sizing: border-box;
+    }
+
+    .product-search input[type="submit"] {
+        width: 90px;
+        box-sizing: border-box;
+    }
+
+    .table-add-button {
+        margin-left: -80px;
+        box-sizing: border-box; 
+    }
+
+    .cart-details-header {
+        grid-template-columns: 70px 80px 80px 70px;
+    }
+
+    .cart-items {
+        grid-template-columns: 70px 80px 140px;
+    }
+
+    .sales-attendant {
+        width: 90%;
+    }
+
+    .cart-item-quantity {
+        margin-left: -10px;
+    }
+
+    .cart-item-total {
+        margin-left: -70px;
+    }
+
+    .cart-search-name {
+        margin-left: 70px;
+        box-sizing: border-box;
+    }
+
+    .cart-search-form-button {
+        margin-left: 100px;
+        box-sizing: border-box;
+    }
+
+    .cart-buttons {
+        margin-left: -150px;
+    }
+
+    .cart-overall-total {
+        margin-left: 50px;
+    }
+
+    .add-minimum-quantity label,
+    .edit-minimum-quantity label
+    {
+        margin-right: 80px;
+        box-sizing: border-box;
+    }
+
+    .edit-product-search-name input[type="text"] {
+        width: 180px;
+    }
+
+    .edit-product-search-name input[type="submit"] {
+        width: 115px;
+    }
+
+    .attentdant-button input{
+        margin-left: 140px;
+        box-sizing: border-box;
+    }
+
+    .clear-cart-button {
+        width: 100px;
+        box-sizing: border-box;
+    }
+
+    .products-search-form {
+        display: grid;
+        grid-row-gap: 20px;
+    }
+
+    .cart-search-name {
+        padding-left: 100px;
+        box-sizing: border-box;
+    }
+
+    .cart-search-form-button {
+        margin-left: 0;
+        box-sizing: border-box;
+    }
+
+    .add-products-button {
+        margin-left: 100px;
+        box-sizing: border-box;
+    }
+
+    .products {
+        width: 95%;
+        box-sizing: border-box;
+    }
+
+    .align-left {
+        margin-left: 12px;
+        box-sizing: border-box;
+    }
+
+    .single-products-details {
+        margin-left: 20px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form {
+        margin-left: -240px;
+        box-sizing: border-box;
+    }
+
+}
+
+@media only screen and (max-width: 375px) {
+    .attendant-form .username input {
+        margin-left: 70px;
+        box-sizing: border-box;
+    }
+    
+    .attendant-form .email-address input,
+    .add-product-form .add-product-price input {
+        margin-left: 98px;
+        box-sizing: border-box;
+    }
+    
+    .attendant-form .password input {
+        margin-left: 72px;
+        box-sizing: border-box;
+    }
+    
+    .attendant-form .confirm-password input {
+        margin-left: 11px;
+        box-sizing: border-box;
+    }
+
+    .attendant-form .role input {
+        margin-left: -35px;
+        box-sizing: border-box;
+    }
+
+    .attendant-form-button {
+        margin-left: 142px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-name input,
+    .edit-product-form .edit-product-name input {
+        margin-left: 100px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-price input,
+    .edit-product-form .edit-product-price input {
+        margin-left: 72px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-quantity input,
+    .edit-product-form .edit-product-quantity input {
+        margin-left: 80px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form .add-product-category select,
+    .edit-product-form .edit-product-category select {
+        margin-left: 77px;
+        box-sizing: border-box;
+    }
+
+    .add-product-form-button, .edit-product-form-button {
+        margin-left: 145px;
+        box-sizing: border-box;
+    }
+
+    .edit-product-form-button {
+        margin-left: 130px;
+        box-sizing: border-box;
+    }
+
+    .sales-attendant-container .header {
+        margin-right: -40px;
+    }
+
+    .table-add-button {
+        height: 35px;
+    }
+
+    .cart-overall-total {
+        margin-left: 50px;
+    }
+
+    .cart-overall-total {
+        margin-left: 40px;
+    }
+
+    .add-minimum-quantity label,
+    .edit-minimum-quantity label
+    {
+        margin-right: 50px;
+        box-sizing: border-box;
+    }
+
+    .edit-product-search-name input[type="text"] {
+         width: 135px;
+    }
+
+    .edit-product-search-name input[type="submit"] {
+        width: 115px;
+    }
+
+    .edit-product-button {
+            margin-left: 10px;
+            box-sizing: border-box;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .edit-product-search-name input[type="text"] {
+        width: 125px;
+    }
+    
+    .edit-product-search-name input[type="submit"] {
+       width: 115px;
+    }
+}
+

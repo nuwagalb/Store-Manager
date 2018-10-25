@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store Manager | Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="products-container">
+        <div class="grid-item header">
+            <h3>Store Manager | Admin</h3>
+            <div class="header-details">
+                <a href="view_all_products.html">Products</a>
+                <a href="view_all_sales.html">Sales</a>
+                <a href="add_attendant.html">Attendant</a>
+                <a href="index.html">Log out</a>
+            </div>
+        </div>
+
+        <div class="grid-item products align-left">
+            <div class="products-item products-header">
+                <h3 class="minor-header">Products List</h3>
+                <hr />
+            </div>
+
+            <div class="products-item other-product-operations">
+                <div class="other-product-operations-item add-product">
+                    <form class="search-product-form" action="#">               
+                        <div class="cart-search-form-item products-search-form">
+                            <label>Search for product</span></label>
+                            <input class="cart-search-name" type="text" placeholder="product id or name" required>
+                            <input class="cart-search-form-button" type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="other-product-operations-item add-products-div">
+                    <button onclick="DisplayAddProductPage()" class="add-products-button" type="submit">Add New Product</button>
+                </div>
+                
+            </div>
+
+            <div class="products-item products-details">
+                <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                    <thead>
+                        <tr>
+                            <th>Product id</th>
+                            <th>Product Name</th>
+                            <th>Product Quantity</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="products-rows">
+                        <tr>
+                            <td>234</td>
+                            <td>Samsung Galaxy</td>
+                            <td>45</td>
+                            <td><button onclick="DisplayViewSingleProductPage()" class="table-view-button" type="submit">View</button></td>
+                            <td><button onclick="DisplayEditProductPage()" class="table-view-button" type="submit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>122</td>
+                            <td>HP Inspiron</td>
+                            <td>4</td>
+                            <td><button onclick="DisplayViewSingleProductPage()" class="table-view-button" type="submit">View</button></td>
+                            <td><button onclick="DisplayEditProductPage()" class="table-view-button" type="submit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>36</td>
+                            <td>RJX 3200</td>
+                            <td>25</td>
+                            <td><button onclick="DisplayViewSingleProductPage()" class="table-view-button" type="submit">View</button></td>
+                            <td><button onclick="DisplayEditProductPage()" class="table-view-button" type="submit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>456</td>
+                            <td>JBL Boom Box</td>
+                            <td>25</td>
+                            <td><button onclick="DisplayViewSingleProductPage()" class="table-view-button" type="submit">View</button></td>
+                            <td><button onclick="DisplayEditProductPage()" class="table-view-button" type="submit">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table> <!--end of table-->
+            </div> <!--end of products-details div-->
+        </div> <!--end of products div-->
+
+        <div class="grid-item"></div>
+
+    </div> <!-- end of products container div-->
+</body>
+</html>

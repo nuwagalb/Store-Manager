@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store Manager | Sales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="sales-container">
+        <div class="grid-item header">
+            <h3>Store Manager | Admin</h3>
+            <div class="header-details">
+                <a href="view_all_products.html">Products</a>
+                <a href="view_all_sales.html">Sales</a>
+                <a href="add_attendant.html">Attendant</a>
+                <a href="index.html">Log out</a>
+            </div>
+        </div>
+
+        <div class="grid-item sales align-left">
+            <div class="sales-item sales-header">
+                <h3 class="minor-header">Sales List</h3>
+                <hr />
+            </div>
+
+            <div class="sales-item other-sales-operations">
+                <div class="other-sales-operations-item add-sale">
+                    <form class="search-sales-form" action="#">               
+                        <div class="cart-search-form-item sales-search-form">
+                            <label>Search for a sale record</span></label>
+                            <input class="cart-search-name" type="text" placeholder="sale id" required>
+                            <input class="cart-search-form-button" type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="sales-item sales-details">
+                <table class="sales-details-item sales-table" cellspacing="0" cellpadding="5">
+                    <thead>
+                        <tr>
+                            <th>Sale id</th>
+                            <th>Product id</th>
+                            <th>Total Amount</th>
+                            <th>Date created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="sales-rows">
+                        <tr>
+                            <td>20034</td>
+                            <td>45</td>
+                            <td>4500</td>
+                            <td>23-09-2018</td>
+                            <td><button onclick="DisplayViewSingleSalePage()" class="table-view-button" type="submit">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>20035</td>
+                            <td>67</td>
+                            <td>1000</td>
+                            <td>03-09-2018</td>
+                            <td><button onclick="DisplayViewSingleSalePage()" class="table-view-button" type="submit">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>200036</td>
+                            <td>209</td>
+                            <td>250</td>
+                            <td>27-03-2018</td>
+                            <td><button onclick="DisplayViewSingleSalePage()" class="table-view-button" type="submit">View</button></td>
+                        </tr>
+                        <tr>
+                            <td>200456</td>
+                            <td>768</td>
+                            <td>257.89</td>
+                            <td>13-06-2018</td>
+                            <td><button onclick="DisplayViewSingleSalePage()" class="table-view-button" type="submit">View</button></td>
+                    </tbody>
+                </table> <!--end of table-->
+            </div> <!--end of products-details div-->
+        </div> <!--end of products div-->
+
+        <div class="grid-item"></div>
+
+    </div> <!-- end of products container div-->
+</body>
+</html>

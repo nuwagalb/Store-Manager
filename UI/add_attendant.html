@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Store Manager | Add a Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/main.js"></script>
+</head>
+<body>
+    <div class="products-container">
+        <div class="grid-item header">
+            <h3>Store Manager | Admin</h3>
+            <div class="header-details">
+                <a href="view_all_products.html">Products</a>
+                <a href="view_all_sales.html">Sales</a>
+                <a href="add_attendant.html">Attendant</a>
+                <a href="index.html">Log out</a>
+            </div>
+        </div>
+
+        <div class="grid-item products align-left add-products-one">
+            <div class="products-item add-products-header">
+                <h3 class="minor-header single-product-title">Add New Attendant</h3>
+                <hr />
+            </div>
+
+            <div class="products-details-item add-single-product">
+                <form class="add-product-form" action="#">
+                    <div class="add-product-form-item add-attendant-name">
+                        <label>Username</label>
+                        <input type="text" placeholder="username" required>
+                    </div>
+
+                    <div class="add-product-form-item add-attendant-email">
+                        <label>Email</label>
+                        <input type="email" step="any" placeholder="email" required>
+                    </div>
+
+                    <div class="add-product-form-item add-attendant-password">
+                        <label>Password</label>
+                        <input type="password" step="any" placeholder="password" required>
+                    </div>
+
+                    <div class="add-product-form-item add-confirm-password">
+                        <label>Confirm Password</label>
+                        <input type="password" step="any" placeholder="Confirm Password" required>
+                    </div>
+
+                    <div class="add-product-form-item role">
+                       <label>Assign admin role</label>
+                       <input type="checkbox" name="role"> 
+                    </div>
+
+                    <div class="add-product-form-item add-product-button">
+                        <input class="add-attendant-form-button" type="submit" value="Add Attendant">
+                    </div>
+                </form> <!--end of add attendant form-->
+            </div> <!--end of single attendant-->   
+
+        </div> <!--end of attendants div-->
+
+        <div class="grid-item"></div>
+
+    </div> <!-- end of products container div-->
+</body>
+</html>
