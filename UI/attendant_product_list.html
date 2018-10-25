@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Store Manager | Products</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <div class="products-container">
+            <div class="grid-item header">
+                <h3>Store Manager | Attendant</h3>
+                <div class="header-details">
+                    <a href="shopping-cart.html">Shopping cart</a>
+                    <a href="attendant_product_list.html">Products</a>
+                    <a href="attendant_sales_list.html">Sales</a>
+                    <a href="index.html">Log out</a>
+                </div>
+            </div>
+
+            <div class="grid-item products align-left">
+                <div class="products-item products-header">
+                    <h3 class="minor-header">Products List</h3>
+                    <hr />
+                </div>
+
+                <div class="products-item products-details">
+                    <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>Product id</th>
+                                <th>Product Name</th>
+                                <th>Product Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td>234</td>
+                                <td>Samsung Galaxy</td>
+                                <td>45</td>
+                                <td><button onclick="DisplayViewSingleAttendantProductPage()" class="table-view-button" type="submit">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>122</td>
+                                <td>HP Inspiron</td>
+                                <td>4</td>
+                                <td><button onclick="DisplayViewSingleAttendantProductPage()" class="table-view-button" type="submit">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>36</td>
+                                <td>RJX 3200</td>
+                                <td>25</td>
+                                <td><button onclick="DisplayViewSingleAttendantProductPage()" class="table-view-button" type="submit">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>456</td>
+                                <td>JBL Boom Box</td>
+                                <td>25</td>
+                                <td><button onclick="DisplayViewSingleAttendantProductPage()" class="table-view-button" type="submit">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                </div> <!--end of products-details div-->
+            </div> <!--end of products div-->
+
+            <div class="grid-item"></div>
+
+        </div> <!-- end of products container div-->
+    </body>
+</html>

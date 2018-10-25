@@ -17,7 +17,9 @@
             <h1>Log in</h1>
         </div>
 
-        <form class="grid-item login-form" action="view_all_products.html">               
+        <form id="login-form" class="grid-item login-form" action="#" 
+            method="POST" onsubmit="return DisplayLoginResults()">
+
             <div class="login-form-item email-address">
                 <label>Enter your email address <span>*</span></label>
                 <input class="input-style" type="email" placeholder="Email" required>
@@ -26,6 +28,15 @@
             <div class="login-form-item password">
                 <label>Enter your password <span>*</span></label>
                 <input class="input-style" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="login-form-item user-role">
+                <label>Enter your role</label>
+                <select id="login-role" name="role" aria-roledescription="option" required>
+                    <option role="option" value="">Role</option>
+                    <option role="option" value="admin">Admin</option>
+                    <option role="option" value="attendant">Sale attendant</option>
+                </select>
             </div>
 
             <div class="login-form-item login-button">
