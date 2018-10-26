@@ -32,7 +32,7 @@ https://store-manager-v1-api.herokuapp.com/
 
 clone repository from link below
 
-1. $ https://github.com/nuwagalb/Store-Manager/tree/feat_get_all_sales_endpoint
+1. $ https://github.com/nuwagalb/Store-Manager.git
 2. $ cd Store-Manager
 
 #### Set up Virtual environment by running commands below
@@ -58,5 +58,5 @@ $ python app.py
 #### Now that the server is running , open your browser and run one of the links below.
 
 $ localhost:5000 or 127.0.0.1:5000
-You can now test out the links using Postman API Development and Testing tool
+- You can now test out the links using Postman Rest-Client
 
