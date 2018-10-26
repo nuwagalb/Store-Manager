@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, json, jsonify
+from flask import Flask, render_template, request, jsonify
 from models.products import Product
 from models.sales import Sale
-#from models.users import User
 
 api = Flask(__name__)
 
@@ -70,7 +69,7 @@ def add_product():
         elif json_data.get('quantity') <= 0.00:
             response_object = {'message':  'The quantity of the product cannot be zero or less than zero'}
             status_code = 400
-        
+
         else:
             new_product = Product(json_data['name'], json_data['price'], json_data['quantity'])
 
@@ -177,6 +176,11 @@ def get_all_sales():
     except:
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
+
+@api.errorhandler(400)
+def bad_request(error):
+    """displays error msg when 400 error code is raised"""
+    return jsonify({'message': 'A Bad request was sent to the server'}), 400
 
 @api.errorhandler(404)
 def page_not_found(error):
