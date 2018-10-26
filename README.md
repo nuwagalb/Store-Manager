@@ -48,14 +48,14 @@ $ pip install -r requirements.txt
 
 $ pytest
 
-#### or for detailed output on unit tests run with verbose.
+#### or for detailed output on unit tests run.
 
 $ py.test --cov=api api/tests/
 #### To run the application invoke the command below.
 
 $ python app.py
 
-#### Now that the server is running , open your browser and run one of the links below.
+#### Now that the server is running , open your browser and run one of the following links.
 
 $ localhost:5000 or 127.0.0.1:5000
 - You can now test out the links using Postman Rest-Client
