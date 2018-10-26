@@ -177,6 +177,11 @@ def get_all_sales():
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
 
+#GENERAL PURPOSE FUNCTIONS
+
+
+
+#ERROR HANDLERS
 @api.errorhandler(400)
 def bad_request(error):
     """displays error msg when 400 error code is raised"""
