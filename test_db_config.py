@@ -1,0 +1,5 @@
+db_name = 'test_db'
+db_user = 'postgres'
+db_password = 'nuwagalb@123'
+db_host = 'localhost'
+db_port = '5432'
