@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Store Manager Version 1</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="main-container-item endpoints-container">
+                <div class="endpoints-container-item endpoints-header">
+                    <h1>Store Manager API</h1>
+                </div>
+                <form class="endpoints-container-item role-form">
+                    <div class="role-form-item role-details">
+                        <label>Select role to use for viewing the endpoints</label>
+                        <select name="role" required>
+                            <option value="">Role</option>
+                            <option value="admin">Admin/Store Owner</option>
+                            <option value="store attendant">Store Attendant</option>
+                        </select>
+                        <input type="submit" value="Submit Role">
+                    </div>
+                </form>
+            </div>
+
+            <!--if logged in, display endpoints, else display not logged in message-->
+            <div class="main-container-item endpoint-display-container">
+                <h3>End points and the roles that have access to them</h3>
+                {% if role == 'Visitor'  %}
+                    <p class="message visitor-message">Your need to select a role inorder to test the endpoints</p>
+                {% endif %}
+
+                {% if role == 'admin' %}
+                    <p class="role-title">Role: <span class="message">{{ role }}</span> </p>
+                   <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>End Point</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td><a href="/api/v1/products">POST /api/v1/products</a></td>
+                                <td>Add new product</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/products/1">GET /api/v1/products/&ltproductId&gt</a></td>
+                                <td>Get a single product</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/products">GET /api/v1/products</a></td>
+                                <td>Get all products</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/sales/1">GET /api/v1/sales/&ltsaleId&gt</a></td>
+                                <td>Get a single sale</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/sales">GET /api/v1/sales</a></td>
+                                <td>Get all sales</td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                {% endif %}
+
+                {% if role == 'store attendant' %}
+                    <p class="role-title">Role: <span class="message">{{ role }}</span> </p>
+                   <table class="products-details-item products-table" cellspacing="0" cellpadding="5">
+                        <thead>
+                            <tr>
+                                <th>End Point</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="products-rows">
+                            <tr>
+                                <td><a href="/api/v1/sales">POST /api/v1/sales</a></td>
+                                <td>Add new sale</td>
+                            </tr>
+                             <tr>
+                                <td><a href="/api/v1/sales/1">GET /api/v1/sales/&ltsaleId&gt</a></td>
+                                <td>Get a single sale</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/products/1">GET /api/v1/products/&ltproductId&gt</a></td>
+                                <td>Get a single product</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/api/v1/products">GET /api/v1/products</a></td>
+                                <td>Get get all products</td>
+                            </tr>
+                        </tbody>
+                    </table> <!--end of table-->
+                {% endif %}
+            </div>
+
+        </div>
+    </body>
+</html>
