@@ -18,12 +18,15 @@ class User:
 
     def get_password(self, password):
         """returns the password status"""
+        hashed_password = None
         if password:
             db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-            password_status = db.find_record_by_password(password)
+            result = db.find_record_by_password(password)
             
-        if not password_status:
-            return False
-        return True
+        if not result:
+            return "Password not found"
+
+        hashed_password = result[2]
+        return hashed_password
 
 

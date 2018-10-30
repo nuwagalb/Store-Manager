@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.products import Product
 from models.sales import Sale
 from models.users import User
+from os import environ
 
 api = Flask(__name__)
 
@@ -29,10 +32,12 @@ def login():
 
     if not email_status:
        return jsonify({'message': 'Invalid email address. Please enter the correct email address'})
-    elif password_status:
-       return jsonify({'message': '{} was successfully logged in'.format(email)})
-    else:
-       return jsonify({'message': 'Invalid password. Please enter the correct password'})
+    
+    if check_password_hash(password_status, password):
+        token = create_access_token(identity=password_status.get('role'))
+        return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
+        
+    return jsonify({'message': 'Invalid password. Please enter the correct password'})
 
 #PRODUCTS
 #add new product
