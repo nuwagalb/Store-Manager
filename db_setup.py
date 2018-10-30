@@ -1,6 +1,6 @@
 import psycopg2
 from db_config import prod_db_name, db_host, db_user, db_password, db_port, test_db_name
-from v2.api.views import api
+from api.views import api
 
 class Database:
     """
@@ -79,7 +79,6 @@ class Database:
                 product_sql = """CREATE TABLE IF NOT EXISTS products(
                                 product_id serial PRIMARY KEY,
                                 name VARCHAR (250) NOT NULL,
-                                serial_no VARCHAR (250) NOT NULL,
                                 unit_price NUMERIC(11, 4) NOT NULL,
                                 quantity NUMERIC(11, 4) NOT NULL,
                                 category_id INT NULL, FOREIGN KEY (category_id) REFERENCES categories(category_id),
