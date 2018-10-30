@@ -1,18 +1,40 @@
 from flask import Flask, render_template, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.products import Product
 from models.sales import Sale
+from models.users import User
+from os import environ
 
 api = Flask(__name__)
 
-@api.route("/")
-def index():
-    """returns the index.html template"""
-    role = request.args.get('role')
+api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
+api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
 
-    if not role:
-        role = "Visitor"
+jwt = JWTManager(api)
 
-    return render_template('index.html', role=role)
+@api.route("/api/v1/auth/signup", methods= ["POST"])
+@jwt_required
+def signup():
+    """signs up a user"""
+    try:
+        response = None
+        json_data = request.get_json()
+
+        email = json_data.get('email')
+        password = json_data.get('password')
+
+        password_hash = generate_password_hash(password)
+
+        user = User(email, password_hash)
+        registration_status = user.register()
+
+        if not registration_status:
+            response = {'message': 'User details could not be registered'}
+        response = {'message': registration_status}
+        return jsonify(response)
+    except Exception:
+        return jsonify({'message': 'There was an error in trying to register a user'})
 
 #PRODUCTS
 #add new product

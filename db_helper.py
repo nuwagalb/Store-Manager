@@ -1,6 +1,5 @@
 import psycopg2
 from db_config import prod_db_name, db_user, db_password, db_host, test_db_name
-from v2.api.views import  api
 
 class DBHelper:
     """
@@ -16,6 +15,7 @@ class DBHelper:
         self.cur = self.conn.cursor()
 
     def insert_record(self, record):
+        """inserts a record into the database"""
         message = None
 
         if self.table_fields[0] == 'user_id':
@@ -96,7 +96,27 @@ class DBHelper:
         #     #     self.cur.execute(sql_for_products)
         #     # message = "{} successfully created".format(record[0])
 
-        # return self.all_sales
+        return message
+
+    def find_record_by_email(self, email):
+        """finds a record by email"""       
+        sql = """SELECT * 
+                 FROM {} 
+                 WHERE {} = '{}'
+              """.format(self.table_name, self.table_fields[1], email)
+        self.cur.execute(sql)
+        result = self.cur.fetchone()
+        return result
+
+    def find_record_by_password(self, password):
+        """finds a record by password"""       
+        sql = """SELECT * 
+                 FROM {} 
+                 WHERE {} = '{}'
+              """.format(self.table_name, self.table_fields[2], password)
+        self.cur.execute(sql)
+        result = self.cur.fetchone()
+        return result
 
     def find_record_by_id(self, record_id):
         """finds a record by it's id"""       
@@ -106,7 +126,6 @@ class DBHelper:
               """.format(self.table_name, self.table_fields[0], record_id)
         self.cur.execute(sql)
         result = self.cur.fetchone()
-
         return result
 
     def find_all_records(self):
@@ -142,15 +161,15 @@ class DBHelper:
     def open_connection():
         """opens up a connection to the database"""
         try:
-            if api.config['TEST_DB'] == 'testing':
-                db_name = test_db_name
-            else:
-                db_name = prod_db_name
+            # if api.config['TEST_DB'] == 'testing':
+            #     db_name = test_db_name
+            # else:
+            #     db_name = prod_db_name
 
             connection = psycopg2.connect(host=db_host,
                             user=db_user,
                             password=db_password,
-                            dbname=db_name
+                            dbname=prod_db_name
                         )
             return connection
         except psycopg2.Error as error:
@@ -160,6 +179,3 @@ class DBHelper:
     def close_connection(connection):
         """closes a connection to the database"""
         return connection.close()
-
-new_helper = DBHelper('sales', ['sale_id', 'product_details', 'total_amount', 'user_id'])
-print(new_helper.insert_record([[{1: 300.00}, {2: 200.00}], 546.50, 1]))
