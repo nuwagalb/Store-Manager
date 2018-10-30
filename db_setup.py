@@ -81,7 +81,7 @@ class Database:
                                 name VARCHAR (250) NOT NULL,
                                 serial_no VARCHAR (250) NOT NULL,
                                 unit_price NUMERIC(11, 4) NOT NULL,
-                                quantity NUMERIC(11, 4) NULL,
+                                quantity NUMERIC(11, 4) NOT NULL,
                                 category_id INT NULL, FOREIGN KEY (category_id) REFERENCES categories(category_id),
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -90,8 +90,7 @@ class Database:
             
                 sales_sql = """CREATE TABLE IF NOT EXISTS sales(
                                 sale_id serial PRIMARY KEY,
-                                sales_quantity NUMERIC(11, 4) NOT NULL,
-                                sales_amount NUMERIC(11, 4) NOT NULL,
+                                total_amount NUMERIC(11, 4) NOT NULL,
                                 user_id INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(user_id),
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -101,7 +100,7 @@ class Database:
                 sales_products_sql = """CREATE TABLE IF NOT EXISTS sales_products(
                                 sale_product_id serial PRIMARY KEY,
                                 sale_id INT NOT NULL, FOREIGN KEY (sale_id) REFERENCES sales(sale_id),
-                                product_id INT NOT NULL, FOREIGN KEY (product_id) REFERENCES products(product_id),
+                                product_details VARCHAR(250) NOT NULL,
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""
