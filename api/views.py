@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from models.products import Product
 from models.sales import Sale
+from models.users import User
 
 api = Flask(__name__)
 
@@ -13,6 +14,25 @@ def index():
         role = "Visitor"
 
     return render_template('index.html', role=role)
+
+@api.route("/api/v1/auth/login", methods=["POST"])
+def login():
+    """logs in a user"""
+    response = None
+    json_data = request.get_json()
+    email = json_data['email']
+    password = json_data['password']
+
+    user = User(email, password)
+    email_status = user.get_email(email)
+    password_status = user.get_password(password)
+
+    if not email_status:
+       return jsonify({'message': 'Invalid email address. Please enter the correct email address'})
+    elif password_status:
+       return jsonify({'message': '{} was successfully logged in'.format(email)})
+    else:
+       return jsonify({'message': 'Invalid password. Please enter the correct password'})
 
 #PRODUCTS
 #add new product
