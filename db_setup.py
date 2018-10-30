@@ -9,9 +9,7 @@ class Database:
 
     def default_connection(self):
         """set up default connection to create the sepicified database"""
-        # print(api.config['TEST_DB'])
         try:
-
             if api.config['TEST_DB'] == 'testing':
                 db_name = test_db_name
             else:
@@ -119,8 +117,5 @@ class Database:
             print(error)
 
 #instance for creating database and tables
-database = Database()
-print(database.connection_to_create_tables())
-
-
-
+db = Database()
+print(db.connection_to_create_tables())

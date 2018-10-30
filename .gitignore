@@ -48,3 +48,5 @@ v1/tests/test_api_get_product.pyc
 v1/tests/test_api_get_sale.pyc
 v1/tests/test_products.pyc
 v1/tests/test_sales.pyc
+v2/api/__pycache__
+db_config.pyc
