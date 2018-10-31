@@ -6,8 +6,6 @@ from models.sales import Sale
 from models.users import User
 from os import environ
 
-api = Flask(__name__)
-
 @api.route("/")
 def index():
     """returns the index.html template"""
@@ -22,22 +20,25 @@ def index():
 def login():
     """logs in a user"""
     response = None
+
     json_data = request.get_json()
     email = json_data['email']
     password = json_data['password']
 
     user = User(email, password)
     email_status = user.get_email(email)
-    password_status = user.get_password(password)
+    current_password = user.get_password(password)
 
     if not email_status:
-       return jsonify({'message': 'Invalid email address. Please enter the correct email address'})
+       response = {'message': 'Invalid email address. Please enter the correct email address'}
+
+    if not check_password_hash(current_password, password):
+        response = {'message': 'Invalid password. Please enter the correct password'}
     
-    if check_password_hash(password_status, password):
-        token = create_access_token(identity=password_status.get('role'))
-        return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
+    token = create_access_token(identity=email_status)
+    response = {'token': token, 'message': '{} was successfully logged in'.format(email)}
         
-    return jsonify({'message': 'Invalid password. Please enter the correct password'})
+    return jsonify(response)
 
 #PRODUCTS
 #add new product
