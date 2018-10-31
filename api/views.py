@@ -33,7 +33,7 @@ def signup():
             response = {'message': 'User details could not be registered'}
         response = {'message': registration_status}
         return jsonify(response)
-    except Exception:
+    except:
         return jsonify({'message': 'There was an error in trying to register a user'})
 
 #PRODUCTS
