@@ -1,8 +1,17 @@
 from flask import Flask, render_template, request, jsonify
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
 from models.products import Product
 from models.sales import Sale
+from models.users import User
+from os import environ
 
 api = Flask(__name__)
+
+api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
+api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
+
+jwt = JWTManager(api)
 
 @api.route("/")
 def index():
@@ -13,6 +22,28 @@ def index():
         role = "Visitor"
 
     return render_template('index.html', role=role)
+
+@api.route("/api/v1/auth/login", methods=["POST"])
+def login():
+    """logs in a user"""
+    response = None
+
+    json_data = request.get_json()
+    email = json_data['email']
+    password = json_data['password']
+
+    user = User(email, password)
+    email_status = user.get_email(email)
+    current_password = user.get_password(email)
+
+    if not email_status:
+       return jsonify({'message': 'Invalid email address.'})
+
+    if not check_password_hash(current_password, password):
+        return jsonify({'message': 'Invalid password. Please enter the correct password'})
+    
+    token = create_access_token(identity=email_status)
+    return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
 
 #PRODUCTS
 #add new product
