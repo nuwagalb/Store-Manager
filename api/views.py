@@ -13,7 +13,7 @@ api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
 
 jwt = JWTManager(api)
 
-@api.route("/api/v1/auth/signup", methods= ["POST"])
+@api.route("/api/v1/auth/signup", methods=["POST"])
 @jwt_required
 def signup():
     """signs up a user"""
