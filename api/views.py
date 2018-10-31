@@ -5,11 +5,12 @@ from models.products import Product
 from models.sales import Sale
 from models.users import User
 from models.validators import Validator
+import datetime
+from db_helper import DBHelper
 
 api = Flask(__name__)
 
 api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
-api.config['APP_SETTING']
 
 jwt = JWTManager(api)
 
@@ -33,27 +34,22 @@ def login():
     password = json_data['password']
 
     user = User(email, password)
-    email_status = user.get_email(email)
+    user.initial_login()
+    
+    returned_user = user.get_email(email)
     current_password = user.get_password(email)
 
-    if not email_status:
+    if not returned_user:
        return jsonify({'message': 'Invalid email address.'})
 
     if not check_password_hash(current_password, password):
         return jsonify({'message': 'Invalid password. Please enter the correct password'})
     
-    token = create_access_token(identity=email_status)
-    return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
-
-#PRODUCTS
-#add new product
-@api.route("/api/v1/products", methods=['POST'])
-def add_product():
-    """adds new product"""
-    json_data = request.get_json()
+    token = create_access_token(identity=returned_user, expires_delta=datetime.timedelta(hours=8))
+    return jsonify({'message': '{} was successfully logged in'.format(email)})
 
 @api.route("/api/v1/auth/signup", methods=["POST"])
-#@jwt_required
+@jwt_required
 def signup():
     """signs up a user"""
     try:
@@ -79,15 +75,16 @@ def signup():
                 response = {'message': registration_status}
                 return jsonify(response)
 
-            return jsonify(password_status)
+            return jsonify({'message': password_status})
 
-        return jsonify(email_status)
+        return jsonify({'message': email_status})
     except:
         return jsonify({'message': 'There was an error in trying to register a user'})
 
 #PRODUCTS
 #add new product
 @api.route("/api/v1/products", methods=['POST'])
+@jwt_required
 def add_product():
     """adds new product"""
     try:
@@ -113,6 +110,7 @@ def add_product():
 
 #get a single product
 @api.route("/api/v1/products/<int:productId>", methods=['GET'])
+@jwt_required
 def get_a_product(productId):
     """returns a single product"""
     try:
@@ -125,6 +123,7 @@ def get_a_product(productId):
 
 #get all product
 @api.route("/api/v1/products", methods=['GET'])
+@jwt_required
 def get_all_products():
     """returns all products"""
     try:

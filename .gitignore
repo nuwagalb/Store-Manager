@@ -3,3 +3,5 @@ tests/__init__.pyc
 tests/test_users.pyc
 tests/__pycache__
 .vscode
+api/__pycache__
+models/__pycache__
