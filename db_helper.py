@@ -107,12 +107,12 @@ class DBHelper:
         result = self.cur.fetchone()
         return result
 
-    def find_record_by_password(self, password):
+    def find_password(self, email):
         """finds a record by password"""       
-        sql = """SELECT * 
+        sql = """SELECT password 
                  FROM {} 
                  WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[2], password)
+              """.format(self.table_name, self.table_fields[1], email)
         self.cur.execute(sql)
         result = self.cur.fetchone()
         return result

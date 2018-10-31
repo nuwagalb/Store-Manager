@@ -34,7 +34,7 @@ def login():
 
     user = User(email, password)
     email_status = user.get_email(email)
-    current_password = user.get_password(password)
+    current_password = user.get_password(email)
 
     if not email_status:
        return jsonify({'message': 'Invalid email address.'})

@@ -16,14 +16,13 @@ class User:
             return False
         return result[1]
 
-    def get_password(self, password):
+    def get_password(self, email):
         """returns the password status"""
-        if password:
+        if email:
             db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-            result = db.find_record_by_password(password)
+            result = db.find_password(email)
             
         if not result:
             return "Password could not be found"
-        return result[2]
 
-
+        return result[0]
