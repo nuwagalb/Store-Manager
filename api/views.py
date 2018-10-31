@@ -4,12 +4,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.products import Product
 from models.sales import Sale
 from models.users import User
-from os import environ
+from models.validators import Validator
 
 api = Flask(__name__)
 
 api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
-api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
+api.config['APP_SETTING']
 
 jwt = JWTManager(api)
 
@@ -52,95 +52,88 @@ def add_product():
     """adds new product"""
     json_data = request.get_json()
 
+@api.route("/api/v1/auth/signup", methods=["POST"])
+#@jwt_required
+def signup():
+    """signs up a user"""
     try:
-        if 'name' not in json_data:
-            response_object = {'message': 'Request is missing the product name key'}
-            status_code = 400
+        response = None
+        json_data = request.get_json()
 
-        elif 'price' not in json_data:
-            response_object = {'message': 'Request is missing the product price key'}
-            status_code = 400
+        email = json_data.get('email')
+        password = json_data.get('password')
 
-        elif 'quantity' not in json_data:
-            response_object = {'message': 'Request is missing the product quantity key'}
-            status_code = 400
+        email_status = Validator.validate_email(email)
+        password_status = Validator.validate_password(password)
 
-        elif len(json_data.keys()) > 3:
-            response_object = {'message': 'Request has more keys than expected'}
-            status_code = 400
+        if email_status is True:
+            if password_status is True:
+                password_hash = generate_password_hash(password)
 
-        elif not isinstance(json_data.get('name'), str):
-            response_object = {'message': 'Invalid data type for name value. Please enter a string'}
-            status_code = 400
+                user = User(email, password_hash)
+                registration_status = user.register()
 
-        elif json_data.get('name') == '':
-            response_object = {'message': 'The name of the product cannot be empty'}
-            status_code = 400
+                if not registration_status:
+                    response = {'message': 'User details could not be registered'}
 
-        elif not isinstance(json_data.get('price'), float):
-            response_object = {'message': 'Invalid data type for price value. Please enter a float'}
-            status_code = 400
+                response = {'message': registration_status}
+                return jsonify(response)
 
-        elif json_data.get('price') == 0.00:
-            response_object = {'message': 'The price of the product cannot be empty'}
-            status_code = 400
+            return jsonify(password_status)
 
-        elif not isinstance(json_data.get('quantity'), float):
-            response_object = {'message': 'Invalid data type for quantity value. Please enter a float'}
-            status_code = 400
-
-        elif json_data.get('quantity') == 0.00:
-            response_object = {'message': 'The quantity of the product cannot be empty'}
-            status_code = 400
-
-        elif json_data.get('price') <= 0.00:
-            response_object = {'message':  'The price of the product cannot be zero or less than zero'}
-            status_code = 400
-
-        elif json_data.get('quantity') <= 0.00:
-            response_object = {'message':  'The quantity of the product cannot be zero or less than zero'}
-            status_code = 400
-
-        else:
-            new_product = Product(json_data['name'], json_data['price'], json_data['quantity'])
-
-            if new_product.add_product() is True:
-                added_product = Product.all_products[-1]
-                response_object = added_product
-                status_code = 201
-                            
-        return jsonify(response_object), status_code
+        return jsonify(email_status)
     except:
-        return jsonify({'message':  'Invalid product request'})
-    
+        return jsonify({'message': 'There was an error in trying to register a user'})
+
+#PRODUCTS
+#add new product
+@api.route("/api/v1/products", methods=['POST'])
+def add_product():
+    """adds new product"""
+    try:
+        json_data = request.get_json()
+
+        name = json_data['name']
+        unit_price = json_data['unit_price']
+        quantity = json_data['quantity']
+
+        if name and unit_price and quantity:
+            new_product = Product(name, unit_price, quantity)
+            product_status = new_product.add_product()
+            
+            if not product_status:
+                response = {'message': 'Product could not be added'}
+
+            response = {'message': product_status}
+            return jsonify(response)
+
+        return jsonify(product_status)
+    except:
+        return jsonify({'message': 'There was an error in trying to add a product'})
 
 #get a single product
 @api.route("/api/v1/products/<int:productId>", methods=['GET'])
 def get_a_product(productId):
     """returns a single product"""
     try:
-        if not Product.all_products:
-            response_object = {'message':  'There are currently no product records'}
-        else:
-            for product in Product.all_products:
-                if product.get('product_id') == productId:
-                    response_object = product
-                    status_code = 200
-        return jsonify(response_object), status_code
+        response = Product.get_single_product(productId)
+        if not response:
+            response = jsonify({'message': 'The product no products in fetch'})
+        return jsonify({'message': response})
     except:
-        return jsonify({'message':  'Invalid request'})
+        return jsonify({'message': 'There was an error in trying to fetch the product'})
 
-#get all products
+#get all product
 @api.route("/api/v1/products", methods=['GET'])
 def get_all_products():
     """returns all products"""
     try:
-        if not Product.all_products:
-            return jsonify({'message':  'There are currently no product records'})
-        return jsonify(Product.all_products)
+        response = Product.get_all_products()
+        if not response:
+            response = jsonify({'message': 'There are no products to fetch'})
+        return jsonify(response)
     except:
-        response_object = {'message':  'Invalid request'}
-        return jsonify(response_object)
+        return jsonify({'message': 'There was an error in trying to fetch products'})
 
 #SALES
 #add new sale
@@ -207,10 +200,6 @@ def get_all_sales():
     except:
         response_object = {'message':  'Invalid request'}
         return jsonify(response_object)
-
-#GENERAL PURPOSE FUNCTIONS
-
-
 
 #ERROR HANDLERS
 @api.errorhandler(400)

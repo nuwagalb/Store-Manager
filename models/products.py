@@ -1,30 +1,41 @@
+from db_helper import DBHelper
+import json
+
 class Product:
     """Class that handles all the actions that can be performed
        on a Product such as: creating a new product, viewing details
        of a product, updating a product's details and deleting a product
     """
-    all_products = []
 
-    def __init__(self, name="", price=0.00, quantity=0.00):
-        """Initializes the Product class"""
-        (self.name, self.price, self.quantity) = (name, price, quantity)
+    def __init__(self, name, unit_price, quantity, category_id=0):
+        self.name = name
+        self.unit_price = unit_price
+        self.quantity = quantity
+        self.category_id = category_id
 
     def add_product(self):
-        """adds a product record"""
-        if not Product.all_products:
-            product_id = 1
-        else:
-            product_id = Product.all_products[-1].get('product_id') + 1
+        """add a product"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        result = db.find_record(self.name)
 
-        Product.all_products.append(
-            {'product_id': product_id, 'name': self.name, 'price': self.price, 'quantity': self.quantity}
-        )
+        if not result:
+            return db.insert_record([self.name, self.unit_price, self.quantity])
+        return "There already exists a product with that name"
 
-        return True
+    @staticmethod
+    def get_single_product(product_id):
+        """get a single product"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        product = db.find_record_by_id(product_id)
 
-    def get_single_product(self, product_id):
-        """returns a single product """
-        product = [product for product in Product.all_products if product.get('product_id') == product_id]
+        if not product:
+            return "The record you are searching for was not found"
+        return product
 
-        return product[0]
+    @staticmethod
+    def get_all_products():
+        """get all available products"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        results = db.find_all_records()
         
+        return results

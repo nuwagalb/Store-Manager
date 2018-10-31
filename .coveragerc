@@ -1,5 +1,5 @@
 [run]
-include = api/views.py, models/products.py, models/sales.py, models/users.py
+include = api/views.py, models/products.py, models/sales.py, models/users.py, models/validators.py
 omit = api/__init__.py
 
 

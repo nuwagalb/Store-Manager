@@ -1,5 +1,7 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 from db_config import prod_db_name, db_user, db_password, db_host, test_db_name
+import os
 
 class DBHelper:
     """
@@ -12,9 +14,10 @@ class DBHelper:
         self.all_sales = []
         self.conn = DBHelper.open_connection()
         self.conn.autocommit = True
-        self.cur = self.conn.cursor()
+        self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def insert_record(self, record):
+        """inserts a record into the database"""
         message = None
 
         if self.table_fields[0] == 'user_id':
@@ -46,23 +49,19 @@ class DBHelper:
 
         if self.table_fields[0] == 'product_id':
             sql = """INSERT INTO 
-                {}({}, {}, {}, {}, {})
-                VALUES('{}', '{}', '{}', '{}', '{}')
+                {}({}, {}, {})
+                VALUES('{}', '{}', '{}')
                 """.format(
                         self.table_name,
                         self.table_fields[1],
                         self.table_fields[2],
                         self.table_fields[3],
-                        self.table_fields[4],
-                        self.table_fields[5],
                         record[0],
                         record[1],
-                        record[2],
-                        record[3],
-                        record[4]
+                        record[2]
                     )
             self.cur.execute(sql)
-            message = "{} successfully created".format(record[0])
+            message = "{} successfully added".format(record[0])
 
         # if self.table_fields[0] == 'sales_id':
         #     sql = """INSERT INTO 
@@ -95,14 +94,14 @@ class DBHelper:
         #     #     self.cur.execute(sql_for_products)
         #     # message = "{} successfully created".format(record[0])
 
-        # return self.all_sales
+        return message
 
-    def find_record_by_email(self, email):
-        """finds a record by email"""       
+    def find_record(self, value):
+        """finds a record by a given value"""       
         sql = """SELECT * 
                  FROM {} 
                  WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[1], email)
+              """.format(self.table_name, self.table_fields[1], value)
         self.cur.execute(sql)
         result = self.cur.fetchone()
         return result
@@ -110,6 +109,16 @@ class DBHelper:
     def find_password(self, email):
         """finds a record by password"""       
         sql = """SELECT password 
+                 FROM {} 
+                 WHERE {} = '{}'
+              """.format(self.table_name, self.table_fields[1], email)
+        self.cur.execute(sql)
+        result = self.cur.fetchone()
+        return result
+
+    def find_record_by_email(self, email):
+        """finds a record by email"""       
+        sql = """SELECT * 
                  FROM {} 
                  WHERE {} = '{}'
               """.format(self.table_name, self.table_fields[1], email)
@@ -160,10 +169,10 @@ class DBHelper:
     def open_connection():
         """opens up a connection to the database"""
         try:
-            # if api.config['TEST_DB'] == 'testing':
-            #     db_name = test_db_name
-            # else:
-            #     db_name = prod_db_name
+            if os.getenv('APP_SETTING') == 'testing':
+                db_name = test_db_name
+            else:
+                db_name = prod_db_name
 
             connection = psycopg2.connect(host=db_host,
                             user=db_user,

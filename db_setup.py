@@ -1,7 +1,6 @@
 import psycopg2
 from db_config import prod_db_name, db_host, db_user, db_password, db_port, test_db_name
-from api.views import api
-
+import os
 class Database:
     """
        class to handle database connections
@@ -10,7 +9,7 @@ class Database:
     def default_connection(self):
         """set up default connection to create the sepicified database"""
         try:
-            if api.config['TEST_DB'] == 'testing':
+            if os.getenv('APP_SETTING') == 'testing':
                 db_name = test_db_name
             else:
                 db_name = prod_db_name
@@ -47,7 +46,7 @@ class Database:
         try:
             if self.default_connection() is True:
 
-                if api.config['TEST_DB'] == 'testing':
+                if os.getenv('APP_SETTING') == 'testing':
                     db_name = test_db_name
                 else:
                     db_name = prod_db_name
@@ -59,9 +58,9 @@ class Database:
 
                 user_sql = """CREATE TABLE IF NOT EXISTS users(
                         user_id serial PRIMARY KEY,
-                        email VARCHAR (355) UNIQUE NOT NULL,
-                        password VARCHAR (50) NOT NULL,
-                        role VARCHAR(50) NOT NULL,
+                        email VARCHAR (100) UNIQUE NOT NULL,
+                        password VARCHAR (200) NOT NULL,
+                        role VARCHAR(6) NOT NULL,
                         date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );"""
@@ -79,9 +78,8 @@ class Database:
                 product_sql = """CREATE TABLE IF NOT EXISTS products(
                                 product_id serial PRIMARY KEY,
                                 name VARCHAR (250) NOT NULL,
-                                unit_price NUMERIC(11, 4) NOT NULL,
-                                quantity NUMERIC(11, 4) NOT NULL,
-                                category_id INT NULL, FOREIGN KEY (category_id) REFERENCES categories(category_id),
+                                unit_price INT NOT NULL,
+                                quantity INT NOT NULL,
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""
