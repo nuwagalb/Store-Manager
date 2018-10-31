@@ -14,37 +14,37 @@ api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
 jwt = JWTManager(api)
 
 @api.route("/api/v1/auth/signup", methods=["POST"])
-@jwt_required
+#@jwt_required
 def signup():
     """signs up a user"""
-    try:
-        response = None
-        json_data = request.get_json()
+    # try:
+    # except:
+    #     return jsonify({'message': 'There was an error in trying to register a user'})
+    response = None
+    json_data = request.get_json()
 
-        email = json_data.get('email')
-        password = json_data.get('password')
+    email = json_data.get('email')
+    password = json_data.get('password')
 
-        email_status = Validator.validate_email(email)
-        password_status = Validator.validate_password(password)
+    email_status = Validator.validate_email(email)
+    password_status = Validator.validate_password(password)
 
-        if email_status is True:
-            if password_status is True:
-                password_hash = generate_password_hash(password)
+    if email_status is True:
+        if password_status is True:
+            password_hash = generate_password_hash(password)
 
-                user = User(email, password_hash)
-                registration_status = user.register()
+            user = User(email, password_hash)
+            registration_status = user.register()
 
-                if not registration_status:
-                    response = {'message': 'User details could not be registered'}
+            if not registration_status:
+                response = {'message': 'User details could not be registered'}
 
-                response = {'message': registration_status}
-                return jsonify(response)
+            response = {'message': registration_status}
+            return jsonify(response)
 
-            return jsonify(password_status)
+        return jsonify(password_status)
 
-        return jsonify(email_status)
-    except:
-        return jsonify({'message': 'There was an error in trying to register a user'})
+    return jsonify(email_status)
 
 #PRODUCTS
 #add new product

@@ -52,3 +52,4 @@ v2/api/__pycache__
 db_config.pyc
 tests/test_validators.pyc
 models/validators.pyc
+db_helper.pyc

@@ -58,9 +58,9 @@ class Database:
 
                 user_sql = """CREATE TABLE IF NOT EXISTS users(
                         user_id serial PRIMARY KEY,
-                        email VARCHAR (355) UNIQUE NOT NULL,
-                        password VARCHAR (350) NOT NULL,
-                        role VARCHAR(50) NOT NULL,
+                        email VARCHAR (100) UNIQUE NOT NULL,
+                        password VARCHAR (200) NOT NULL,
+                        role VARCHAR(6) NOT NULL,
                         date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                         date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                     );"""
