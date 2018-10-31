@@ -4,12 +4,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.products import Product
 from models.sales import Sale
 from models.users import User
+from models.validators import Validator
 from os import environ
 
 api = Flask(__name__)
 
 api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
-api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
 
 jwt = JWTManager(api)
 
@@ -24,15 +24,25 @@ def signup():
         email = json_data.get('email')
         password = json_data.get('password')
 
-        password_hash = generate_password_hash(password)
+        email_status = Validator.validate_email(email)
+        password_status = Validator.validate_password(password)
 
-        user = User(email, password_hash)
-        registration_status = user.register()
+        if email_status is True:
+            if password_status is True:
+                password_hash = generate_password_hash(password)
 
-        if not registration_status:
-            response = {'message': 'User details could not be registered'}
-        response = {'message': registration_status}
-        return jsonify(response)
+                user = User(email, password_hash)
+                registration_status = user.register()
+
+                if not registration_status:
+                    response = {'message': 'User details could not be registered'}
+
+                response = {'message': registration_status}
+                return jsonify(response)
+
+            return jsonify(password_status)
+
+        return jsonify(email_status)
     except:
         return jsonify({'message': 'There was an error in trying to register a user'})
 
@@ -203,11 +213,11 @@ def get_all_sales():
 
 
 
-#ERROR HANDLERS
-@api.errorhandler(400)
-def bad_request(error):
-    """displays error msg when 400 error code is raised"""
-    return jsonify({'message': 'A Bad request was sent to the server'}), 400
+# #ERROR HANDLERS
+# @api.errorhandler(400)
+# def bad_request(error):
+#     """displays error msg when 400 error code is raised"""
+#     return jsonify({'message': 'A Bad request was sent to the server'}), 400
 
 @api.errorhandler(404)
 def page_not_found(error):

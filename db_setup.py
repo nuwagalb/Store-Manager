@@ -1,7 +1,6 @@
 import psycopg2
 from db_config import prod_db_name, db_host, db_user, db_password, db_port, test_db_name
-from api.views import api
-
+import os
 class Database:
     """
        class to handle database connections
@@ -10,7 +9,7 @@ class Database:
     def default_connection(self):
         """set up default connection to create the sepicified database"""
         try:
-            if api.config['TEST_DB'] == 'testing':
+            if os.getenv('APP_SETTING') == 'testing':
                 db_name = test_db_name
             else:
                 db_name = prod_db_name
@@ -47,7 +46,7 @@ class Database:
         try:
             if self.default_connection() is True:
 
-                if api.config['TEST_DB'] == 'testing':
+                if os.getenv('APP_SETTING') == 'testing':
                     db_name = test_db_name
                 else:
                     db_name = prod_db_name

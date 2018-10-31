@@ -1,5 +1,6 @@
 import psycopg2
 from db_config import prod_db_name, db_user, db_password, db_host, test_db_name
+import os
 
 class DBHelper:
     """
@@ -108,12 +109,12 @@ class DBHelper:
         result = self.cur.fetchone()
         return result
 
-    def find_record_by_password(self, password):
+    def find_password(self, email):
         """finds a record by password"""       
-        sql = """SELECT * 
+        sql = """SELECT password 
                  FROM {} 
                  WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[2], password)
+              """.format(self.table_name, self.table_fields[1], email)
         self.cur.execute(sql)
         result = self.cur.fetchone()
         return result
@@ -161,10 +162,10 @@ class DBHelper:
     def open_connection():
         """opens up a connection to the database"""
         try:
-            # if api.config['TEST_DB'] == 'testing':
-            #     db_name = test_db_name
-            # else:
-            #     db_name = prod_db_name
+            if os.getenv('APP_SETTING') == 'testing':
+                db_name = test_db_name
+            else:
+                db_name = prod_db_name
 
             connection = psycopg2.connect(host=db_host,
                             user=db_user,

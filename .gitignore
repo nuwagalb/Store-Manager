@@ -50,3 +50,5 @@ v1/tests/test_products.pyc
 v1/tests/test_sales.pyc
 v2/api/__pycache__
 db_config.pyc
+tests/test_validators.pyc
+models/validators.pyc
