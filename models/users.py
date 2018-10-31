@@ -13,7 +13,7 @@ class User:
              result = db.find_record_by_email(email)
 
         if not result:
-            return "Email could not be found"
+            return False
         return result[1]
 
     def get_password(self, password):

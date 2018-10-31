@@ -6,6 +6,13 @@ from models.sales import Sale
 from models.users import User
 from os import environ
 
+api = Flask(__name__)
+
+api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
+api.config['TEST_DB'] = environ.get('TESTING_ENVIRONMENT')
+
+jwt = JWTManager(api)
+
 @api.route("/")
 def index():
     """returns the index.html template"""
@@ -30,15 +37,13 @@ def login():
     current_password = user.get_password(password)
 
     if not email_status:
-       response = {'message': 'Invalid email address. Please enter the correct email address'}
+       return jsonify({'message': 'Invalid email address.'})
 
     if not check_password_hash(current_password, password):
-        response = {'message': 'Invalid password. Please enter the correct password'}
+        return jsonify({'message': 'Invalid password. Please enter the correct password'})
     
     token = create_access_token(identity=email_status)
-    response = {'token': token, 'message': '{} was successfully logged in'.format(email)}
-        
-    return jsonify(response)
+    return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
 
 #PRODUCTS
 #add new product
