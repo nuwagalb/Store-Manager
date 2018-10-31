@@ -17,103 +17,60 @@ jwt = JWTManager(api)
 #@jwt_required
 def signup():
     """signs up a user"""
-    # try:
-    # except:
-    #     return jsonify({'message': 'There was an error in trying to register a user'})
-    response = None
-    json_data = request.get_json()
+    try:
+        response = None
+        json_data = request.get_json()
 
-    email = json_data.get('email')
-    password = json_data.get('password')
+        email = json_data.get('email')
+        password = json_data.get('password')
 
-    email_status = Validator.validate_email(email)
-    password_status = Validator.validate_password(password)
+        email_status = Validator.validate_email(email)
+        password_status = Validator.validate_password(password)
 
-    if email_status is True:
-        if password_status is True:
-            password_hash = generate_password_hash(password)
+        if email_status is True:
+            if password_status is True:
+                password_hash = generate_password_hash(password)
 
-            user = User(email, password_hash)
-            registration_status = user.register()
+                user = User(email, password_hash)
+                registration_status = user.register()
 
-            if not registration_status:
-                response = {'message': 'User details could not be registered'}
+                if not registration_status:
+                    response = {'message': 'User details could not be registered'}
 
-            response = {'message': registration_status}
-            return jsonify(response)
+                response = {'message': registration_status}
+                return jsonify(response)
 
-        return jsonify(password_status)
+            return jsonify(password_status)
 
-    return jsonify(email_status)
+        return jsonify(email_status)
+    except:
+        return jsonify({'message': 'There was an error in trying to register a user'})
 
 #PRODUCTS
 #add new product
 @api.route("/api/v1/products", methods=['POST'])
 def add_product():
     """adds new product"""
-    json_data = request.get_json()
-
     try:
-        if 'name' not in json_data:
-            response_object = {'message': 'Request is missing the product name key'}
-            status_code = 400
+        json_data = request.get_json()
 
-        elif 'price' not in json_data:
-            response_object = {'message': 'Request is missing the product price key'}
-            status_code = 400
+        name = json_data['name']
+        unit_price = json_data['unit_price']
+        quantity = json_data['quantity']
 
-        elif 'quantity' not in json_data:
-            response_object = {'message': 'Request is missing the product quantity key'}
-            status_code = 400
+        if name and unit_price and quantity:
+            new_product = Product(name, unit_price, quantity)
+            product_status = new_product.add_product()
+            
+            if not product_status:
+                response = {'message': 'Product could not be added'}
 
-        elif len(json_data.keys()) > 3:
-            response_object = {'message': 'Request has more keys than expected'}
-            status_code = 400
+            response = {'message': product_status}
+            return jsonify(response)
 
-        elif not isinstance(json_data.get('name'), str):
-            response_object = {'message': 'Invalid data type for name value. Please enter a string'}
-            status_code = 400
-
-        elif json_data.get('name') == '':
-            response_object = {'message': 'The name of the product cannot be empty'}
-            status_code = 400
-
-        elif not isinstance(json_data.get('price'), float):
-            response_object = {'message': 'Invalid data type for price value. Please enter a float'}
-            status_code = 400
-
-        elif json_data.get('price') == 0.00:
-            response_object = {'message': 'The price of the product cannot be empty'}
-            status_code = 400
-
-        elif not isinstance(json_data.get('quantity'), float):
-            response_object = {'message': 'Invalid data type for quantity value. Please enter a float'}
-            status_code = 400
-
-        elif json_data.get('quantity') == 0.00:
-            response_object = {'message': 'The quantity of the product cannot be empty'}
-            status_code = 400
-
-        elif json_data.get('price') <= 0.00:
-            response_object = {'message':  'The price of the product cannot be zero or less than zero'}
-            status_code = 400
-
-        elif json_data.get('quantity') <= 0.00:
-            response_object = {'message':  'The quantity of the product cannot be zero or less than zero'}
-            status_code = 400
-
-        else:
-            new_product = Product(json_data['name'], json_data['price'], json_data['quantity'])
-
-            if new_product.add_product() is True:
-                added_product = Product.all_products[-1]
-                response_object = added_product
-                status_code = 201
-                            
-        return jsonify(response_object), status_code
+        return jsonify(product_status)
     except:
-        return jsonify({'message':  'Invalid product request'})
-    
+        return jsonify({'message': 'There was an error in trying to add a product'})
 
 #get a single product
 @api.route("/api/v1/products/<int:productId>", methods=['GET'])

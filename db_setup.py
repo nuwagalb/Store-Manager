@@ -80,7 +80,6 @@ class Database:
                                 name VARCHAR (250) NOT NULL,
                                 unit_price NUMERIC(11, 4) NOT NULL,
                                 quantity NUMERIC(11, 4) NOT NULL,
-                                category_id INT NULL, FOREIGN KEY (category_id) REFERENCES categories(category_id),
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""

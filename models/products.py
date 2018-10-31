@@ -1,3 +1,6 @@
+from db_helper import DBHelper
+
+
 class Product:
     """Class that handles all the actions that can be performed
        on a Product such as: creating a new product, viewing details
@@ -5,26 +8,24 @@ class Product:
     """
     all_products = []
 
-    def __init__(self, name="", price=0.00, quantity=0.00):
-        """Initializes the Product class"""
-        (self.name, self.price, self.quantity) = (name, price, quantity)
+    def __init__(self, name, unit_price, quantity, category_id=0):
+        self.name = name
+        self.unit_price = unit_price
+        self.quantity = quantity
+        self.category_id = category_id
 
     def add_product(self):
-        """adds a product record"""
-        if not Product.all_products:
-            product_id = 1
-        else:
-            product_id = Product.all_products[-1].get('product_id') + 1
-
-        Product.all_products.append(
-            {'product_id': product_id, 'name': self.name, 'price': self.price, 'quantity': self.quantity}
-        )
-
-        return True
+        """add a product"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        insertion_status = db.insert_record([
+                        self.name,
+                        self.unit_price,
+                        self.quantity
+                    ])
+        return insertion_status
 
     def get_single_product(self, product_id):
-        """returns a single product """
-        product = [product for product in Product.all_products if product.get('product_id') == product_id]
-
-        return product[0]
-        
+        """get a single product"""
+        self.product_id = product_id
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        product = db.find_record_by_id(self.product_id)

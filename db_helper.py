@@ -48,23 +48,19 @@ class DBHelper:
 
         if self.table_fields[0] == 'product_id':
             sql = """INSERT INTO 
-                {}({}, {}, {}, {}, {})
-                VALUES('{}', '{}', '{}', '{}', '{}')
+                {}({}, {}, {})
+                VALUES('{}', '{}', '{}')
                 """.format(
                         self.table_name,
                         self.table_fields[1],
                         self.table_fields[2],
                         self.table_fields[3],
-                        self.table_fields[4],
-                        self.table_fields[5],
                         record[0],
                         record[1],
-                        record[2],
-                        record[3],
-                        record[4]
+                        record[2]
                     )
             self.cur.execute(sql)
-            message = "{} successfully created".format(record[0])
+            message = "{} successfully added".format(record[0])
 
         # if self.table_fields[0] == 'sales_id':
         #     sql = """INSERT INTO 
