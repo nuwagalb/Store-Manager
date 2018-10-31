@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 from db_config import prod_db_name, db_user, db_password, db_host, test_db_name
 import os
 
@@ -13,7 +14,7 @@ class DBHelper:
         self.all_sales = []
         self.conn = DBHelper.open_connection()
         self.conn.autocommit = True
-        self.cur = self.conn.cursor()
+        self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def insert_record(self, record):
         """inserts a record into the database"""
@@ -95,12 +96,12 @@ class DBHelper:
 
         return message
 
-    def find_record_by_email(self, email):
-        """finds a record by email"""       
+    def find_record(self, value):
+        """finds a record by a given value"""       
         sql = """SELECT * 
                  FROM {} 
                  WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[1], email)
+              """.format(self.table_name, self.table_fields[1], value)
         self.cur.execute(sql)
         result = self.cur.fetchone()
         return result

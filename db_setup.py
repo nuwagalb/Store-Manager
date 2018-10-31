@@ -78,8 +78,8 @@ class Database:
                 product_sql = """CREATE TABLE IF NOT EXISTS products(
                                 product_id serial PRIMARY KEY,
                                 name VARCHAR (250) NOT NULL,
-                                unit_price NUMERIC(11, 4) NOT NULL,
-                                quantity NUMERIC(11, 4) NOT NULL,
+                                unit_price INT NOT NULL,
+                                quantity INT NOT NULL,
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""

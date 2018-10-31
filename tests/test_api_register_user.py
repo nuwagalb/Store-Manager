@@ -19,7 +19,7 @@ class RegisterUserTestCase(unittest.TestCase):
     def test_for_initial_successful_registration_of_a_user_without_admin_rights(self):
         """tests that a user has been successfully registered"""
         login_response = self.api.post('/api/v1/auth/login', content_type="application/json",
-                      data=json.dumps(self.user1)
+                      data=json.dumps(self.admin)
                  )
 
         data = login_response.json

@@ -1,12 +1,11 @@
 from db_helper import DBHelper
-
+import json
 
 class Product:
     """Class that handles all the actions that can be performed
        on a Product such as: creating a new product, viewing details
        of a product, updating a product's details and deleting a product
     """
-    all_products = []
 
     def __init__(self, name, unit_price, quantity, category_id=0):
         self.name = name
@@ -17,15 +16,26 @@ class Product:
     def add_product(self):
         """add a product"""
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
-        insertion_status = db.insert_record([
-                        self.name,
-                        self.unit_price,
-                        self.quantity
-                    ])
-        return insertion_status
+        result = db.find_record(self.name)
 
-    def get_single_product(self, product_id):
+        if not result:
+            return db.insert_record([self.name, self.unit_price, self.quantity])
+        return "There already exists a product with that name"
+
+    @staticmethod
+    def get_single_product(product_id):
         """get a single product"""
-        self.product_id = product_id
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
-        product = db.find_record_by_id(self.product_id)
+        product = db.find_record_by_id(product_id)
+
+        if not product:
+            return "The record you are searching for was not found"
+        return product
+
+    @staticmethod
+    def get_all_products():
+        """get all available products"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        results = db.find_all_records()
+        
+        return results

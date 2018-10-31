@@ -77,28 +77,24 @@ def add_product():
 def get_a_product(productId):
     """returns a single product"""
     try:
-        if not Product.all_products:
-            response_object = {'message':  'There are currently no product records'}
-        else:
-            for product in Product.all_products:
-                if product.get('product_id') == productId:
-                    response_object = product
-                    status_code = 200
-        return jsonify(response_object), status_code
+        response = Product.get_single_product(productId)
+        if not response:
+            response = jsonify({'message': 'The product no products in fetch'})
+        return jsonify({'message': response})
     except:
-        return jsonify({'message':  'Invalid request'})
+        return jsonify({'message': 'There was an error in trying to fetch the product'})
 
-#get all products
+#get all product
 @api.route("/api/v1/products", methods=['GET'])
 def get_all_products():
     """returns all products"""
     try:
-        if not Product.all_products:
-            return jsonify({'message':  'There are currently no product records'})
-        return jsonify(Product.all_products)
+        response = Product.get_all_products()
+        if not response:
+            response = jsonify({'message': 'There are no products to fetch'})
+        return jsonify(response)
     except:
-        response_object = {'message':  'Invalid request'}
-        return jsonify(response_object)
+        return jsonify({'message': 'There was an error in trying to fetch products'})
 
 #SALES
 #add new sale

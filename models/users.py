@@ -13,5 +13,8 @@ class User:
     def register(self):
         """registers a user"""
         db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-        registration_status = db.insert_record([self.email, self.password, self.role])
-        return registration_status
+        result = db.find_record(self.email)
+        
+        if not result:
+            return db.insert_record([self.email, self.password, self.role])
+        return "There already exists a user with that email address"
