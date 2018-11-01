@@ -168,7 +168,7 @@ class DBHelper:
               """.format(self.table_name, self.table_fields[0], record_id)
         self.cur.execute(sql)
 
-        return True
+        return {'message': 'The product was successfully deleted'}
 
     @staticmethod
     def open_connection():

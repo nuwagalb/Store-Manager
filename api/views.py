@@ -137,12 +137,12 @@ def get_all_products():
 #get modify a product
 @api.route("/api/v1/products/<productId>", methods=['PUT'])
 def modify_product(productId):
-    """modifies a product"""
+    """returns the modified product"""
     try:
         responses = []
 
         if not productId:
-            responses.append({'message': 'You must specify the product id to modify'})
+            responses.append({'message': 'You must specify the id for product to modify'})
 
         json_data = request.get_json()
 
@@ -163,6 +163,21 @@ def modify_product(productId):
     except:
         return jsonify({'message': 'There was an error in trying to modify the product'})
 
+#delete a product
+@api.route("/api/v1/products/<productId>", methods=['DELETE'])
+def delete_product(productId):
+    """returns details of deleting a product """
+    response = {}
+    if not productId:
+        response = {'message': 'You must specify the id for product to delete'}
+
+    result = Product.delete_product(productId)
+        
+    return jsonify(result)
+    # try:
+        
+    # except:
+    #     return jsonify({'message': 'There was an error in trying to delete the product'})
 #SALES
 #add new sale
 @api.route("/api/v1/sales", methods=['POST'])

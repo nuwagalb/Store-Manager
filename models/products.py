@@ -29,7 +29,7 @@ class Product:
         product = db.find_record_by_id(product_id)
 
         if not product:
-            return "The record you are searching for was not found"
+            return {'message': 'The record you are searching for was not found'}
         return product
 
     @staticmethod
@@ -46,3 +46,15 @@ class Product:
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
         
         return db.update_record(field_name, value, 'product_id', product_id)
+
+    @staticmethod
+    def delete_product(product_id):
+        """deletes a product"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        find_record = db.find_record_by_id(product_id)
+
+        if not find_record:
+            return {'message': 'The record your trying to delete does not exist'}
+        
+        return db.delete_record(product_id)
+
