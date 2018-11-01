@@ -153,7 +153,12 @@ class DBHelper:
         self.cur.execute(sql)
         updated_rows = self.cur.rowcount
 
-        return updated_rows
+        if not updated_rows:
+            return "Record could not be updated"
+
+        updated_record = self.find_record_by_id(id_value)
+
+        return updated_record
 
     def delete_record(self, record_id):
         """deletes a record from the database"""

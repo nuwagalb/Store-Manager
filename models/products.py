@@ -39,3 +39,10 @@ class Product:
         results = db.find_all_records()
         
         return results
+
+    @staticmethod
+    def modify_product(product_id, field_name, value):
+        """modify product details"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        
+        return db.update_record(field_name, value, 'product_id', product_id)

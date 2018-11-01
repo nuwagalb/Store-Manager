@@ -30,8 +30,8 @@ def login():
     response = None
 
     json_data = request.get_json()
-    email = json_data['email']
-    password = json_data['password']
+    email = json_data.get('email').strip()
+    password = json_data.get('password').strip()
 
     user = User(email, password)
     user.initial_login()
@@ -49,15 +49,15 @@ def login():
     return jsonify({'message': '{} was successfully logged in'.format(email)})
 
 @api.route("/api/v1/auth/signup", methods=["POST"])
-@jwt_required
+#@jwt_required
 def signup():
     """signs up a user"""
     try:
         response = None
         json_data = request.get_json()
 
-        email = json_data.get('email')
-        password = json_data.get('password')
+        email = json_data.get('email').strip()
+        password = json_data.get('password').strip()
 
         email_status = Validator.validate_email(email)
         password_status = Validator.validate_password(password)
@@ -84,15 +84,15 @@ def signup():
 #PRODUCTS
 #add new product
 @api.route("/api/v1/products", methods=['POST'])
-@jwt_required
+#@jwt_required
 def add_product():
     """adds new product"""
     try:
         json_data = request.get_json()
 
-        name = json_data['name']
-        unit_price = json_data['unit_price']
-        quantity = json_data['quantity']
+        name = json_data.get('name').strip()
+        unit_price = json_data.get('unit_price')
+        quantity = json_data.get('quantity')
 
         if name and unit_price and quantity:
             new_product = Product(name, unit_price, quantity)
@@ -110,20 +110,20 @@ def add_product():
 
 #get a single product
 @api.route("/api/v1/products/<int:productId>", methods=['GET'])
-@jwt_required
+#@jwt_required
 def get_a_product(productId):
     """returns a single product"""
     try:
         response = Product.get_single_product(productId)
         if not response:
             response = jsonify({'message': 'The product no products in fetch'})
-        return jsonify({'message': response})
+        return jsonify(response)
     except:
         return jsonify({'message': 'There was an error in trying to fetch the product'})
 
 #get all product
 @api.route("/api/v1/products", methods=['GET'])
-@jwt_required
+#@jwt_required
 def get_all_products():
     """returns all products"""
     try:
@@ -133,6 +133,37 @@ def get_all_products():
         return jsonify(response)
     except:
         return jsonify({'message': 'There was an error in trying to fetch products'})
+
+#get modify a product
+@api.route("/api/v1/products/<productId>", methods=['PUT'])
+def modify_product(productId):
+    """modifies a product"""
+    responses = []
+
+    if not productId:
+        responses.append({'message': 'You must specify the product id to modify'})
+
+    json_data = request.get_json()
+
+    if 'name' in json_data:
+        return jsonify({'message': 'The product name cannot be modified'})
+
+    new_unit_price = json_data.get('unit_price')
+    new_quantity = json_data.get('quantity')
+
+    if new_unit_price:
+        Product.modify_product(productId, 'unit_price', new_unit_price)
+
+    if new_quantity:
+        responses.append(Product.modify_product(productId, 'quantity', new_quantity))
+
+    for response in responses:
+        return jsonify(response)
+
+    # try:
+        
+    # except:
+    #     return jsonify({'message': 'There was an error in trying to modify the product'})
 
 #SALES
 #add new sale
@@ -215,11 +246,6 @@ def page_not_found(error):
 def unauthorized_access(error):
     """displays error message when 401 error code is raised"""
     return jsonify({'message': 'You are not authorized to access this resource'}), 401
-
-@api.errorhandler(500)
-def internal_server_error(error):
-    """displays error message when 500 error code is raised"""
-    return jsonify({'message': 'An internal server error was encountered'}), 404
 
 @api.errorhandler(405)
 def wrong_method(error):
