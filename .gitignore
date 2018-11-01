@@ -5,3 +5,7 @@ tests/__pycache__
 .vscode
 api/__pycache__
 models/__pycache__
+db_config.py
+__pycache__/db_helper.cpython-36.pyc
+__pycache__/db_config.cpython-36.pyc
+__pycache__/app.cpython-36.pyc
