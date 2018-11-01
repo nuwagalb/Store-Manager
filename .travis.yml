@@ -5,6 +5,17 @@ python:
 install:
 - pip install -r requirements.txt
 
+env:
+  global:
+    - export APP_SETTINGS=testing
+
+services:
+  - postgresql
+
+before_script:
+    - source .env 
+    - python db_setup.py
+
 script:
   py.test --cov=api tests/
 
