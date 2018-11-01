@@ -58,3 +58,12 @@ class Product:
         
         return db.delete_record(product_id)
 
+    @staticmethod
+    def get_product_by_name(product_name):
+        """"gets a product by it's name"""
+        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+        find_product = db.find_record(product_name)
+
+        return find_product
+
+

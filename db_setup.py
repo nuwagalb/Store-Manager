@@ -5,14 +5,15 @@ class Database:
     """
        class to handle database connections
     """
-
     def default_connection(self):
         """set up default connection to create the sepicified database"""
         try:
-            if os.getenv('APP_SETTING') == 'testing':
+            if os.environ.get('APP_SETTINGS') == 'testing':
                 db_name = test_db_name
             else:
                 db_name = prod_db_name
+
+            print(db_name)
 
             connection = psycopg2.connect("dbname={} host={} user={} password={} port={}".format(
                 'postgres', db_host, db_user, db_password, db_port))
@@ -46,10 +47,12 @@ class Database:
         try:
             if self.default_connection() is True:
 
-                if os.getenv('APP_SETTING') == 'testing':
+                if os.environ.get('APP_SETTINGS') == 'testing':
                     db_name = test_db_name
                 else:
                     db_name = prod_db_name
+
+                print(db_name)
                     
                 connection = psycopg2.connect("dbname={} host={} user={} password={} port={}".format(
                     db_name, db_host, db_user, db_password, db_port))

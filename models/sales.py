@@ -1,30 +1,38 @@
+from db_helper import DBHelper
 class Sale:
     """Class that handles all the actions that can be performed
        on a Sale such as: creating a new sale, viewing details 
        of a sale, updating a sale's details and deleting a sale
     """
-    all_sales = []
+    def __init__(self, total_amount, user_id):
+        self.total_amount = total_amount
+        self.user_id = user_id
+        
 
-    def __init__(self, product_id=0, quantity=0.00, amount=0.00):
-        """Initializes the Sale class"""
-        (self.product_id, self.quantity, self.amount) = (product_id, quantity, amount)
+    # def add_sale(self):
+    #     """add a sale"""
+    #     db = DBHelper('sales', ['sales_id', 'total_amount', 'user_id'])
+    #     result = db.find_record(self.)
 
-    def add_sale(self):
-        """adds sale record to """
-        if not Sale.all_sales:
-            sale_id = 1
-        else:
-            sale_id = Sale.all_sales[-1].get('sale_id') + 1
+    #     if not result:
+    #         return db.insert_record([self.name, self.unit_price, self.quantity])
+    #     return "There already exists a product with that name"
 
-        Sale.all_sales.append(
-            {'sale_id': sale_id, 'product_id': self.product_id, 'quantity': self.quantity, 'amount': self.amount}
-        )
+    # @staticmethod
+    # def get_single_product(product_id):
+    #     """get a single product"""
+    #     db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+    #     product = db.find_record_by_id(product_id)
 
-        return True
+    #     if not product:
+    #         return {'message': 'The record you are searching for was not found'}
+    #     return product
 
-    def get_single_sale(self, sale_id):
-        """returns a single sale """
-        sale = [sale for sale in Sale.all_sales if sale.get('sale_id') == sale_id]
-
-        return sale[0]
+    # @staticmethod
+    # def get_all_products():
+    #     """get all available products"""
+    #     db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
+    #     results = db.find_all_records()
+        
+    #     return results
         

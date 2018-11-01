@@ -63,36 +63,17 @@ class DBHelper:
             self.cur.execute(sql)
             message = "{} successfully added".format(record[0])
 
-        # if self.table_fields[0] == 'sales_id':
-        #     sql = """INSERT INTO 
-        #     {}({}, {})
-        #     VALUES('{}', '{}')
-        #     """.format(
-        #         self.table_name,
-        #         self.table_fields[2],
-        #         self.table_fields[3],
-        #         record[1],
-        #         record[2])
-        #     self.cur.execute(sql)
-
-        #     #get the id of the just created record
-        #     sql_for_all_sales = """SELECT * FROM {}""".format(self.table_name)
-        #     self.cur.execute(sql_for_all_sales)
-        #     self.all_sales = self.cur.fetchall()
-
-        #     # sql_for_id = """
-        #     #         SELECT currval(pg_get_serial_sequence('{}', '{}'))
-        #     #       """.format(self.table_name, self.table_fields[0])
-        #     # self.cur.execute(sql_for_id)
-        #     # result = self.cur.fetchone()
-
-        #     # for product in record[0]:
-        #     #     sql_for_products = """INSERT INTO 
-        #     #                         sales_products(sale_id, product_details)
-        #     #                             VALUES('{}', '{}')
-        #     #                        """.format(result, product)
-        #     #     self.cur.execute(sql_for_products)
-        #     # message = "{} successfully created".format(record[0])
+        if self.table_fields[0] == 'sales_id':
+            sql = """INSERT INTO 
+                    {}({}, {})
+                    VALUES('{}', '{}')
+            """.format(
+                self.table_name,
+                self.table_fields[2],
+                self.table_fields[3],
+                record[1],
+                record[2])
+            self.cur.execute(sql)
 
         return message
 
@@ -174,7 +155,7 @@ class DBHelper:
     def open_connection():
         """opens up a connection to the database"""
         try:
-            if os.getenv('APP_SETTING') == 'testing':
+            if os.environ.get('APP_SETTINGS') == 'testing':
                 db_name = test_db_name
             else:
                 db_name = prod_db_name
@@ -182,7 +163,7 @@ class DBHelper:
             connection = psycopg2.connect(host=db_host,
                             user=db_user,
                             password=db_password,
-                            dbname=prod_db_name
+                            dbname=db_name
                         )
             return connection
         except psycopg2.Error as error:

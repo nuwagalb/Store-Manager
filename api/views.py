@@ -46,7 +46,7 @@ def login():
         return jsonify({'message': 'Invalid password. Please enter the correct password'})
     
     token = create_access_token(identity=returned_user, expires_delta=datetime.timedelta(hours=8))
-    return jsonify({'message': '{} was successfully logged in'.format(email)})
+    return jsonify({'token': token, 'message': '{} was successfully logged in'.format(email)})
 
 @api.route("/api/v1/auth/signup", methods=["POST"])
 #@jwt_required
@@ -126,8 +126,9 @@ def get_a_product(productId):
 #@jwt_required
 def get_all_products():
     """returns all products"""
+    response = Product.get_all_products()
+    
     try:
-        response = Product.get_all_products()
         if not response:
             response = jsonify({'message': 'There are no products to fetch'})
         return jsonify(response)
@@ -167,100 +168,110 @@ def modify_product(productId):
 @api.route("/api/v1/products/<productId>", methods=['DELETE'])
 def delete_product(productId):
     """returns details of deleting a product """
-    response = {}
-    if not productId:
-        response = {'message': 'You must specify the id for product to delete'}
+    try:
+        response = {}
+        if not productId:
+            response = {'message': 'You must specify the id for product to delete'}
 
-    result = Product.delete_product(productId)
-        
-    return jsonify(result)
-    # try:
-        
-    # except:
-    #     return jsonify({'message': 'There was an error in trying to delete the product'})
+        result = Product.delete_product(productId)
+            
+        return jsonify(result)
+    except:
+        return jsonify({'message': 'There was an error in trying to delete the product'})
 #SALES
 #add new sale
 @api.route("/api/v1/sales", methods=['POST'])
 def add_sale():
     """adds new sale"""
+    quantity_in_db = 0
+    product_to_update = 0
+    product_to_update_id = 0 
     json_data = request.get_json()
 
-    try:
-        if 'product_id' not in json_data:
-            response_object = {'message': 'Request is missing the product id key'}
-            status_code = 400
+    sale_product_name = json_data.get('name')
+    sale_product_quantity = json_data.get('quantity')
 
-        elif 'quantity' not in json_data:
-            response_object = {'message': 'Request is missing the sale quantity key'}
-            status_code = 400
+    if not sale_product_name:
+        return jsonify({'message': 'You need to provide a product name'})
+    
+    if not sale_product_quantity:
+       return jsonify({'message': 'You need to provide a quantity for the product'})
 
-        elif 'amount' not in json_data:
-            response_object = {'message': 'Request is missing the sale amount key'}
-            status_code = 400
+    find_sale_product = Product.get_product_by_name(sale_product_name)
 
-        elif len(json_data.keys()) > 3:
-            response_object = {'message': 'Request has more keys than expected'}
-            status_code = 400
+    if not find_sale_product:
+        return jsonify({'message': 'Product does not exist. Please enter valid product name'})
 
-        else:
-            new_sale = Sale(json_data['product_id'], json_data['quantity'], json_data['amount'])
-            sale_status = new_sale.add_sale()
-            
-            if sale_status is True:
-                response_object = Sale.all_sales[-1]
-                status_code = 201
+    if find_sale_product:
+        quantity_in_db = find_sale_product.get('quantity')
 
-        return jsonify(response_object), status_code
-    except:
-        response_object = {'message':  'Invalid sale request'}
-        return jsonify(response_object)
+    if quantity_in_db == 0:
+        return jsonify({'message': 'There are no products to sell'})
+
+    if sale_product_quantity < 0:
+         return jsonify({'message': 'Product quantity cannot be negative'})
+
+    if sale_product_quantity > quantity_in_db:
+        return jsonify({'message': 'There are less products stored than those you have requested for'})
+
+    updated_quantity = quantity_in_db - sale_product_quantity
+    product_to_update = Product.get_product_by_name(sale_product_name)
+
+    if product_to_update:
+        product_to_update_id = product_to_update.get('product_id')
+        Product.modify_product(product_to_update_id, 'quantity', updated_quantity)
+
+    if find_sale_product:
+        total_sale_amount = sale_product_quantity * find_sale_product.get('unit_price')
+        return jsonify({'Total Amount of Sale': total_sale_amount})
+    
 
 #get a single sale
 @api.route("/api/v1/sales/<int:saleId>", methods=['GET'])
 def get_a_sale(saleId):
-    """returns a single product"""
-    try:
-        if not Sale.all_sales:
-            return jsonify({'message':  'There are currently no sale records'})
+#     """returns a single product"""
+#     try:
+#         if not Sale.all_sales:
+#             return jsonify({'message':  'There are currently no sale records'})
 
-        for sale in Sale.all_sales:
-            if sale.get('sale_id') == saleId:
-                return jsonify(sale), 200
+#         for sale in Sale.all_sales:
+#             if sale.get('sale_id') == saleId:
+#                 return jsonify(sale), 200
         
-        return jsonify(response_object)
-    except:
-        response_object = {'message':  'Invalid request'}
-        return jsonify(response_object)
+#         return jsonify(response_object)
+#     except:
+#         response_object = {'message':  'Invalid request'}
+#         return jsonify(response_object)
 
-#get all sales
-@api.route("/api/v1/sales", methods=['GET'])
-def get_all_sales():
-    """returns all sales"""
-    try:
-        if not Sale.all_sales:
-            return jsonify({'message':  'There are currently no sale records'})
-        return jsonify(Sale.all_sales)
-    except:
-        response_object = {'message':  'Invalid request'}
-        return jsonify(response_object)
+# #get all sales
+# @api.route("/api/v1/sales", methods=['GET'])
+# def get_all_sales():
+#     """returns all sales"""
+#     try:
+#         if not Sale.all_sales:
+#             return jsonify({'message':  'There are currently no sale records'})
+#         return jsonify(Sale.all_sales)
+#     except:
+#         response_object = {'message':  'Invalid request'}
+#         return jsonify(response_object)
 
-#ERROR HANDLERS
-@api.errorhandler(400)
-def bad_request(error):
-    """displays error msg when 400 error code is raised"""
-    return jsonify({'message': 'A Bad request was sent to the server'}), 400
+# #ERROR HANDLERS
+# @api.errorhandler(400)
+# def bad_request(error):
+#     """displays error msg when 400 error code is raised"""
+#     return jsonify({'message': 'A Bad request was sent to the server'}), 400
 
-@api.errorhandler(404)
-def page_not_found(error):
-    """displays error msg when 404 error code is raised"""
-    return jsonify({'message': 'Resource could not be found'}), 404
+# @api.errorhandler(404)
+# def record_not_found(error):
+#     """displays error msg when 404 error code is raised"""
+#     return jsonify({'message': 'Resource could not be found'}), 404
 
-@api.errorhandler(401)
-def unauthorized_access(error):
-    """displays error message when 401 error code is raised"""
-    return jsonify({'message': 'You are not authorized to access this resource'}), 401
+# @api.errorhandler(401)
+# def unauthorized_access(error):
+#     """displays error message when 401 error code is raised"""
+#     return jsonify({'message': 'You are not authorized to access this resource'}), 401
 
-@api.errorhandler(405)
-def wrong_method(error):
-    """displays error message when 405 error code is raised"""
-    return jsonify({'message': 'You tried to access the resource using the wrong method.'}), 405
+# @api.errorhandler(405)
+# def wrong_method(error):
+#     """displays error message when 405 error code is raised"""
+#     return jsonify({'message': 'You tried to access the resource using the wrong method.'}), 405
