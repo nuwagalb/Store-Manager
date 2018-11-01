@@ -138,32 +138,30 @@ def get_all_products():
 @api.route("/api/v1/products/<productId>", methods=['PUT'])
 def modify_product(productId):
     """modifies a product"""
-    responses = []
+    try:
+        responses = []
 
-    if not productId:
-        responses.append({'message': 'You must specify the product id to modify'})
+        if not productId:
+            responses.append({'message': 'You must specify the product id to modify'})
 
-    json_data = request.get_json()
+        json_data = request.get_json()
 
-    if 'name' in json_data:
-        return jsonify({'message': 'The product name cannot be modified'})
+        if 'name' in json_data:
+            return jsonify({'message': 'The product name cannot be modified'})
 
-    new_unit_price = json_data.get('unit_price')
-    new_quantity = json_data.get('quantity')
+        new_unit_price = json_data.get('unit_price')
+        new_quantity = json_data.get('quantity')
 
-    if new_unit_price:
-        Product.modify_product(productId, 'unit_price', new_unit_price)
+        if new_unit_price:
+            Product.modify_product(productId, 'unit_price', new_unit_price)
 
-    if new_quantity:
-        responses.append(Product.modify_product(productId, 'quantity', new_quantity))
+        if new_quantity:
+            responses.append(Product.modify_product(productId, 'quantity', new_quantity))
 
-    for response in responses:
-        return jsonify(response)
-
-    # try:
-        
-    # except:
-    #     return jsonify({'message': 'There was an error in trying to modify the product'})
+        for response in responses:
+            return jsonify(response)
+    except:
+        return jsonify({'message': 'There was an error in trying to modify the product'})
 
 #SALES
 #add new sale

@@ -154,7 +154,7 @@ class DBHelper:
         updated_rows = self.cur.rowcount
 
         if not updated_rows:
-            return "Record could not be updated"
+            return {'message': 'Record could not be updated'}
 
         updated_record = self.find_record_by_id(id_value)
 
