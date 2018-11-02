@@ -4,6 +4,7 @@ in a single store
 
 
 #### Badges
+[![Build Status](https://travis-ci.org/nuwagalb/Store-Manager.svg?branch=develop)](https://travis-ci.org/nuwagalb/Store-Manager)
 
 #### project captures the following routes 
 
