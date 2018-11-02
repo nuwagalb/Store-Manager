@@ -13,8 +13,6 @@ class Database:
             else:
                 db_name = prod_db_name
 
-            print(db_name)
-
             connection = psycopg2.connect("dbname={} host={} user={} password={} port={}".format(
                 'postgres', db_host, db_user, db_password, db_port))
             connection.autocommit = True
@@ -51,8 +49,6 @@ class Database:
                     db_name = test_db_name
                 else:
                     db_name = prod_db_name
-
-                print(db_name)
                     
                 connection = psycopg2.connect("dbname={} host={} user={} password={} port={}".format(
                     db_name, db_host, db_user, db_password, db_port))
@@ -90,6 +86,7 @@ class Database:
             
                 sales_sql = """CREATE TABLE IF NOT EXISTS sales(
                                 sale_id serial PRIMARY KEY,
+                                sale_order_no INT NOT NULL,
                                 total_amount NUMERIC(11, 4) NOT NULL,
                                 user_id INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(user_id),
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

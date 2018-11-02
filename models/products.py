@@ -19,7 +19,9 @@ class Product:
         result = db.find_record(self.name)
 
         if not result:
-            return db.insert_record([self.name, self.unit_price, self.quantity])
+            db.insert_record([self.name, self.unit_price, self.quantity])
+            return db.find_record(self.name)
+
         return "There already exists a product with that name"
 
     @staticmethod

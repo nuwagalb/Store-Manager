@@ -1,24 +1,25 @@
 from db_helper import DBHelper
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User:
     """
         class with all the methods and attributes 
         of working with a user
     """
-    def __init__(self, email, password, role="admin"):
+    def __init__(self, email, password, role="attendant"):
         self.email = email
         self.password = password
         self.role = role
+        User.admin_creation()
 
-    def initial_login(self):
-        """this method registers the first user as the admin of the system"""
+    @staticmethod
+    def admin_creation():
+        """creates a new admin at setting up of the database"""
         db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-        results = db.find_all_records()
-
-        if not results:
-            db.insert_record([self.email, self.password, self.role])
-            self.register()
-        self.role = "attendant"
+        
+        if not db.find_all_records():
+            hashed_password = generate_password_hash('Admin@123')
+            db.insert_record(['admin@storemanager.com', hashed_password, 'admin'])
 
     def get_email(self, email):
         """returns email statuus"""
@@ -46,6 +47,8 @@ class User:
         db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
         result = db.find_record(self.email)
         
-        if not result:
-            return db.insert_record([self.email, self.password, self.role])
+        if not result: 
+            db.insert_record([self.email, self.password, self.role])
+            inserted_user = db.find_record(self.email)
+            return inserted_user
         return "There already exists a user with that email address"

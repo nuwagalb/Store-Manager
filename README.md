@@ -73,5 +73,9 @@ $ python app.py
 #### Now that the server is running , open your browser and run one of the following links.
 
 $ localhost:5000 or 127.0.0.1:5000
-- You can now test out the links using Postman Rest-Client
+- You can now test out the endpoints
+
+#### The default login details are:
+- Email Address: admin@storemanager.com
+- Password: Admin@123
 

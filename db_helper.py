@@ -65,12 +65,14 @@ class DBHelper:
 
         if self.table_fields[0] == 'sales_id':
             sql = """INSERT INTO 
-                    {}({}, {})
-                    VALUES('{}', '{}')
+                    {}({}, {}, {})
+                    VALUES('{}', '{}', '{}')
             """.format(
                 self.table_name,
+                self.table_fields[1],
                 self.table_fields[2],
                 self.table_fields[3],
+                record[0],
                 record[1],
                 record[2])
             self.cur.execute(sql)
