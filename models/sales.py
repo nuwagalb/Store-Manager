@@ -7,7 +7,7 @@ class Sale:
     def __init__(self, sales_order_no, total_amount, user_id):
         self.sales_order_no = sales_order_no
         self.total_amount = total_amount
-        self.user_id = user_id       
+        self.user_id = user_id        
 
     def add_sale(self):
         """add a sale"""
@@ -15,8 +15,7 @@ class Sale:
         result = db.find_record(self.sales_order_no)
 
         if not result:
-            db.insert_record([self.sales_order_no, self.total_amount, self.user_id])
-            return db.find_record(self.sales_order_no)
+            return db.insert_record([self.sales_order_no, self.total_amount, self.user_id])
         return "There already exists a sale with that name"
 
     @staticmethod

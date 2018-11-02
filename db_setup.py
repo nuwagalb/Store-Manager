@@ -87,8 +87,9 @@ class Database:
                 sales_sql = """CREATE TABLE IF NOT EXISTS sales(
                                 sale_id serial PRIMARY KEY,
                                 sale_order_no INT NOT NULL,
+                                product_id INT NOT NULL,
                                 total_amount NUMERIC(11, 4) NOT NULL,
-                                user_id INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(user_id),
+                                quantity INT NOT NULL,
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""

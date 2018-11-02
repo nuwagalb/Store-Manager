@@ -202,15 +202,15 @@ def add_sale():
             sale_product_quantity = json_data.get('quantity')
 
             if not sale_product_name:
-                return jsonify({'error': 'You need to provide a product name'})
+                return jsonify({'error': 'You need to provide a product name'}), 400
             
             if not sale_product_quantity:
-                return jsonify({'error': 'You need to provide a quantity for the product'})
+                return jsonify({'error': 'You need to provide a quantity for the product'}), 400
 
             find_sale_product = Product.get_product_by_name(sale_product_name)
 
             if not find_sale_product:
-                return jsonify({'error': 'Product does not exist. Please enter valid product name'})
+                return jsonify({'error': 'Product does not exist. Please enter valid product name'}), 400
 
             if find_sale_product:
                 quantity_in_db = find_sale_product.get('quantity')
@@ -234,7 +234,11 @@ def add_sale():
             if find_sale_product:
                 total_sale_amount = sale_product_quantity * find_sale_product.get('unit_price')
         
-            return jsonify({'Total Amount of Sale': total_sale_amount}), 200
+            return jsonify({'Product id': product_to_update_id,
+                            'Total Amount of Sale': total_sale_amount,
+                            'Quantity sold': sale_product_quantity, 
+                            'Quantity left in stock': updated_quantity
+                            }), 200
         return jsonify({'error': 'You are not authorized to access this endpoint'}), 401
     except:
         return jsonify({'error': "There was an error in trying to add a new sale"}), 501
