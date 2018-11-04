@@ -18,12 +18,12 @@ class DBHelper:
 
     def insert_record(self, record):
         """inserts a record into the database"""
-        message = None
 
         if self.table_fields[0] == 'user_id':
             sql = """INSERT INTO 
                 {}({}, {}, {})
                 VALUES('{}', '{}', '{}')
+                RETURNING {}
                 """.format(
                         self.table_name,
                         self.table_fields[1],
@@ -31,26 +31,32 @@ class DBHelper:
                         self.table_fields[3],
                         record[0],
                         record[1],
-                        record[2]
+                        record[2],
+                        self.table_fields[0]
                     )
             self.cur.execute(sql)
-            message = "{} successfully created".format(record[0])
+            result = self.cur.fetchone()
 
         if self.table_fields[0] == 'category_id':
             sql = """INSERT INTO 
                 {}({})
-                VALUES('{}')
+                VALUES('{}', '{}')
+                RETURNING {}
                 """.format(
-                    self.table_name,
-                    self.table_fields[1],
-                    record[0])
+                        self.table_name,
+                        self.table_fields[1],
+                        record[0],
+                        record[1],
+                        self.table_fields[0]
+                    )
             self.cur.execute(sql)
-            message = "{} successfully created".format(record[0])	
+            result = self.cur.fetchone()
 
         if self.table_fields[0] == 'product_id':
             sql = """INSERT INTO 
                 {}({}, {}, {})
                 VALUES('{}', '{}', '{}')
+                RETURNING {}
                 """.format(
                         self.table_name,
                         self.table_fields[1],
@@ -58,26 +64,33 @@ class DBHelper:
                         self.table_fields[3],
                         record[0],
                         record[1],
-                        record[2]
+                        record[2],
+                        self.table_fields[0]
                     )
             self.cur.execute(sql)
-            message = "{} successfully added".format(record[0])
+            result = self.cur.fetchone()
 
-        if self.table_fields[0] == 'sales_id':
+        if self.table_fields[0] == 'sale_id':
             sql = """INSERT INTO 
-                    {}({}, {}, {})
-                    VALUES('{}', '{}', '{}')
+                    {}({}, {}, {}, {})
+                    VALUES('{}', '{}', '{}', '{}')
+                    RETURNING {}
             """.format(
                 self.table_name,
                 self.table_fields[1],
                 self.table_fields[2],
                 self.table_fields[3],
+                self.table_fields[4],
                 record[0],
                 record[1],
-                record[2])
+                record[2],
+                record[3],
+                self.table_fields[0]
+            )
             self.cur.execute(sql)
+            result = self.cur.fetchone()
 
-        return message
+        return result
 
     def find_record(self, value):
         """finds a record by a given value"""       
@@ -85,26 +98,6 @@ class DBHelper:
                  FROM {} 
                  WHERE {} = '{}'
               """.format(self.table_name, self.table_fields[1], value)
-        self.cur.execute(sql)
-        result = self.cur.fetchone()
-        return result
-
-    def find_password(self, email):
-        """finds a record by password"""       
-        sql = """SELECT password 
-                 FROM {} 
-                 WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[1], email)
-        self.cur.execute(sql)
-        result = self.cur.fetchone()
-        return result
-
-    def find_record_by_email(self, email):
-        """finds a record by email"""       
-        sql = """SELECT * 
-                 FROM {} 
-                 WHERE {} = '{}'
-              """.format(self.table_name, self.table_fields[1], email)
         self.cur.execute(sql)
         result = self.cur.fetchone()
         return result
@@ -117,6 +110,7 @@ class DBHelper:
               """.format(self.table_name, self.table_fields[0], record_id)
         self.cur.execute(sql)
         result = self.cur.fetchone()
+
         return result
 
     def find_all_records(self):
@@ -132,26 +126,35 @@ class DBHelper:
         sql = """ UPDATE {}
                 SET {} = '{}'
                 WHERE {} ={}
-            """.format(self.table_name, field_name, name_value, field_id, id_value)
+                RETURNING {}
+            """.format(
+                self.table_name,
+                field_name,
+                name_value,
+                field_id,
+                id_value,
+                self.table_fields[0])
         self.cur.execute(sql)
         updated_rows = self.cur.rowcount
 
-        if not updated_rows:
-            return {'message': 'Record could not be updated'}
-
-        updated_record = self.find_record_by_id(id_value)
-
-        return updated_record
+        return updated_rows
 
     def delete_record(self, record_id):
         """deletes a record from the database"""
         sql = """DELETE
                  FROM {} 
                  WHERE {} = {}
-              """.format(self.table_name, self.table_fields[0], record_id)
-        self.cur.execute(sql)
+                 RETURNING {}
+              """.format(
+                  self.table_name,
+                  self.table_fields[0],
+                  record_id,
+                  self.table_fields[1])
 
-        return {'message': 'The product was successfully deleted'}
+        self.cur.execute(sql)
+        deleted_name = self.cur.fetchone()
+
+        return deleted_name
 
     @staticmethod
     def open_connection():
@@ -159,6 +162,8 @@ class DBHelper:
         try:
             if os.environ.get('APP_SETTINGS') == 'testing':
                 db_name = test_db_name
+            elif os.environ.get('DATABASE_URL') == 'heroku':
+                db_name = os.environ['DATABASE_URL']
             else:
                 db_name = prod_db_name
 

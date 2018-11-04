@@ -10,45 +10,38 @@ class User:
         self.email = email
         self.password = password
         self.role = role
+        self.db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
         User.admin_creation()
 
     @staticmethod
     def admin_creation():
-        """creates a new admin at setting up of the database"""
+        """creates admin details for the first user of the application"""
         db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
         
         if not db.find_all_records():
             hashed_password = generate_password_hash('Admin@123')
             db.insert_record(['admin@storemanager.com', hashed_password, 'admin'])
 
-    def get_email(self, email):
-        """returns email statuus"""
-        if email:
-             db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-             result = db.find_record_by_email(email)
+    def get_record(self, value):
+        """returns any given record"""
+        if value:
+            result = self.db.find_record(value)
 
         if not result:
-            return False
+            return {}
         return result
-
-    def get_password(self, email):
-        """returns the password status"""
-        if email:
-            db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-            result = db.find_password(email)
-            
-        if not result:
-            return "Password could not be found"
-
-        return result.get('password')
 
     def register(self):
         """registers a user"""
-        db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
-        result = db.find_record(self.email)
+        inserted_id = 0
+        result = self.db.find_record(self.email)
         
-        if not result: 
-            db.insert_record([self.email, self.password, self.role])
-            inserted_user = db.find_record(self.email)
-            return inserted_user
-        return "There already exists a user with that email address"
+        if not result:
+            inserted_row = self.db.insert_record([self.email, self.password, self.role])
+            inserted_id = inserted_row.get('user_id')
+        
+        if inserted_id:
+            return self.db.find_record_by_id(inserted_id)
+
+        return {}
+        

@@ -12,17 +12,23 @@ class Product:
         self.unit_price = unit_price
         self.quantity = quantity
         self.category_id = category_id
+        self.db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
 
     def add_product(self):
         """add a product"""
-        db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
-        result = db.find_record(self.name)
-
+        inserted_id = 0
+        result = self.db.find_record(self.name)
+        
         if not result:
-            db.insert_record([self.name, self.unit_price, self.quantity])
-            return db.find_record(self.name)
+            inserted_row = self.db.insert_record(
+                    [self.name, self.unit_price, self.quantity, self.category_id]
+                )
+            inserted_id = inserted_row.get('product_id')
+        
+        if inserted_id:
+            return self.db.find_record_by_id(inserted_id)
 
-        return "There already exists a product with that name"
+        return {}
 
     @staticmethod
     def get_single_product(product_id):
@@ -31,7 +37,8 @@ class Product:
         product = db.find_record_by_id(product_id)
 
         if not product:
-            return {'message': 'The record you are searching for was not found'}
+            return {}
+
         return product
 
     @staticmethod
@@ -39,7 +46,7 @@ class Product:
         """get all available products"""
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
         results = db.find_all_records()
-        
+
         return results
 
     @staticmethod
@@ -55,17 +62,18 @@ class Product:
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
         find_record = db.find_record_by_id(product_id)
 
-        if not find_record:
-            return {'message': 'The record your trying to delete does not exist'}
+        if find_record:
+            deleted_product = db.delete_record(product_id)
+            deleted_product_name = deleted_product.get('name')
+            return deleted_product_name
         
-        return db.delete_record(product_id)
+        return ''
 
     @staticmethod
     def get_product_by_name(product_name):
         """"gets a product by it's name"""
         db = DBHelper('products', ['product_id', 'name', 'unit_price', 'quantity'])
-        find_product = db.find_record(product_name)
+        found_product = db.find_record(product_name)
 
-        return find_product
-
-
+        return found_product
+        

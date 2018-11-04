@@ -10,6 +10,8 @@ class Database:
         try:
             if os.environ.get('APP_SETTINGS') == 'testing':
                 db_name = test_db_name
+            elif os.environ.get('DATABASE_URL') == 'heroku':
+                db_name = os.environ['DATABASE_URL']
             else:
                 db_name = prod_db_name
 
@@ -47,6 +49,8 @@ class Database:
 
                 if os.environ.get('APP_SETTINGS') == 'testing':
                     db_name = test_db_name
+                elif os.environ.get('DATABASE_URL') == 'heroku':
+                    db_name = os.environ['DATABASE_URL']
                 else:
                     db_name = prod_db_name
                     
@@ -86,10 +90,10 @@ class Database:
             
                 sales_sql = """CREATE TABLE IF NOT EXISTS sales(
                                 sale_id serial PRIMARY KEY,
-                                sale_order_no INT NOT NULL,
-                                product_id INT NOT NULL,
-                                total_amount NUMERIC(11, 4) NOT NULL,
+                                product_id INT NOT NULL, FOREIGN KEY (product_id) REFERENCES products(product_id),
                                 quantity INT NOT NULL,
+                                total_amount INT NOT NULL,
+                                user_id INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(user_id),
                                 date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                 date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );"""

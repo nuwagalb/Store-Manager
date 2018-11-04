@@ -4,28 +4,37 @@ class Sale:
        on a Sale such as: creating a new sale, viewing details 
        of a sale, updating a sale's details and deleting a sale
     """
-    def __init__(self, sales_order_no, total_amount, user_id):
-        self.sales_order_no = sales_order_no
+    def __init__(self, product_id, quantity, total_amount, user_id):
+        self.product_id = product_id
+        self.quantity = quantity
         self.total_amount = total_amount
         self.user_id = user_id        
 
     def add_sale(self):
         """add a sale"""
-        db = DBHelper('sales', ['sales_id', 'sales_order_no', 'total_amount', 'user_id'])
-        result = db.find_record(self.sales_order_no)
+        db = DBHelper(
+                'sales', 
+                ['sale_id', 'product_id', 'quantity',
+                 'total_amount', 'user_id'
+                ]
+            )
 
-        if not result:
-            return db.insert_record([self.sales_order_no, self.total_amount, self.user_id])
-        return "There already exists a sale with that name"
+        new_sale = db.insert_record([self.product_id, self.quantity,
+                                    self.total_amount, self.user_id])
+        if new_sale:
+            return new_sale.get('sale_id')
+
+        return 0
 
     @staticmethod
     def get_single_sale(sale_id):
         """get a single sale"""
-        db = DBHelper('sales', ['sales_id', 'sales_order_no', 'total_amount', 'user_id'])
+        db = DBHelper('sales', ['sale_id', 'product_id', 'quantity', 'total_amount', 'user_id'])
         sale = db.find_record_by_id(sale_id)
 
         if not sale:
-            return {'message': 'The record you are searching for was not found'}
+            return {}
+
         return sale
 
     @staticmethod

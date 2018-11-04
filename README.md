@@ -54,7 +54,7 @@ $ pip install -r requirements.txt
 1. Edit the db_config.py file to include details for making 
    a connection to your postgres DBMS
 2. Run the db_setup.py file to create the database and tables
-   $ python db_setup.py
+   - $ python db_setup.py
 
 #### To run the unit tests invoke/run the command below.
 1. $ source .env - this sets up an environment variable that gives you access to the test database

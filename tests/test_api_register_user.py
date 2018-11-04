@@ -23,7 +23,7 @@ class RegisterUserTestCase(unittest.TestCase):
 
         self.assertEqual(
             data,
-            {'error': 'Invalid email address given'})
+            {'error': 'Invalid email address. Please enter the correct email'})
         self.assertEqual(login_response.status_code, 401)
 
     def test_for_invalid_password_on_login(self):
@@ -48,20 +48,20 @@ class RegisterUserTestCase(unittest.TestCase):
         self.assertEqual(login_response.status_code, 200)
         self.assertEqual(login_data['message'], 'admin@storemanager.com was successfully logged in')
 
-    # def test_store_attendant_is_successfully_created(self):
-    #     """tests that an attendant is successfully created"""
-    #     login_response = self.client.post('api/v1/auth/login', content_type="application/json",
-    #                         data=json.dumps({"admin@storemanager.com", "Admin@123"}))
+    def test_store_attendant_is_successfully_created(self):
+        """tests that an attendant is successfully created"""
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
+                            data=json.dumps({"admin@storemanager.com", "Admin@123"}))
         
-    #     data = json.loads(login_response.data)
+        data = json.loads(login_response.data)
 
-    #     response = self.client.post('api/v1/auth/signup', content_type="application/json",
-    #                     data=json.dumps({"attendant@storemanager.com", "Attendant1@123", "attendant"}))
+        response = self.client.post('api/v1/auth/signup', content_type="application/json",
+                        data=json.dumps({"attendant@storemanager.com", "Attendant1@123", "attendant"}))
 
-    #     data = json.loads(response)
-    #     self.assertEqual(
-    #             data, 
-    #             {"msg": "You  have successfully signed as joseph"})
-    #     self.assertEqual(response.status_code, 201)
+        data = json.loads(response)
+        self.assertEqual(
+                data, 
+                {"msg": "You  have successfully signed as joseph"})
+        self.assertEqual(response.status_code, 201)
 
    
