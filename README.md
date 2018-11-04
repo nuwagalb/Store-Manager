@@ -4,7 +4,7 @@ in a single store
 
 
 #### Badges
-[![Build Status](https://travis-ci.org/nuwagalb/Store-Manager.svg?branch=develop)](https://travis-ci.org/nuwagalb/Store-Manager)
+[![Build Status](https://travis-ci.org/nuwagalb/Store-Manager.svg?branch=develop)](https://travis-ci.org/nuwagalb/Store-Manager) [![Coverage Status](https://coveralls.io/repos/github/nuwagalb/Store-Manager/badge.svg?branch=develop)](https://coveralls.io/github/nuwagalb/Store-Manager?branch=develop)
 
 #### project captures the following routes 
 
