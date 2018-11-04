@@ -35,13 +35,13 @@ def login():
         current_password = user.get_record(email)
 
         if not returned_user:
-            return jsonify({'error': 'Invalid email address. Please enter the correct email'}), 403
+            return jsonify({'error': 'Invalid email address. Please enter the correct email'}), 404
 
         if current_password:
             password_status = check_password_hash(current_password.get('password'), password)
 
         if not password_status:
-            return jsonify({'error': 'Invalid password. Please enter the correct password'}), 403
+            return jsonify({'error': 'Invalid password. Please enter the correct password'}), 404
 
         if password_status:
             token_identity = {'user_id': returned_user['user_id'], 'role': returned_user['role']}
@@ -110,7 +110,7 @@ def add_product():
                     return jsonify({'error': 'Product already exists. Please select a different name'
                                    }), 409
 
-                return jsonify(product_status), 200
+                return jsonify(product_status), 201
 
             return jsonify(product_status)
         return jsonify({'error': 'Access to this resource is forbidden'}), 403
@@ -122,90 +122,73 @@ def add_product():
 @jwt_required
 def get_a_product(productId):
     """returns a single product"""
-    try:
-        product_status = Product.get_single_product(productId)
+    product_status = Product.get_single_product(productId)
 
-        if not product_status:
-            return jsonify({'error': 'Invalid request. The product you are searching for does not exist'}), 404
-            
-        return jsonify(product_status), 200
-    except:
-        return jsonify({'error': 'There was an error in trying to fetch the product'}), 400
+    if not product_status:
+        return jsonify({'error': 'Invalid request. The product you are searching for does not exist'}), 404
+        
+    return jsonify(product_status), 200
 
 #get all product
 @api.route("/api/v2/products", methods=['GET'])
 @jwt_required
 def get_all_products():
     """returns all products"""
-    try:
-        product_status = Product.get_all_products()
+    product_status = Product.get_all_products()
 
-        if not product_status:
-            return jsonify({'error': 'There are no products to fetch'}), 404
+    if not product_status:
+        return jsonify({'error': 'There are no products to fetch'}), 404
 
-        return jsonify(product_status), 200
-    except:
-        return jsonify({'error': 'There was an error in trying to fetch products'}), 400
+    return jsonify(product_status), 200
 
 #get modify a product
 @api.route("/api/v2/products/<productId>", methods=['PUT'])
 @jwt_required
 def modify_product(productId):
     """returns the modified product"""
-    try:
-        logged_in_user = get_jwt_identity()
-        if logged_in_user.get('role') == 'admin':
+    logged_in_user = get_jwt_identity()
+    if logged_in_user.get('role') == 'admin':
+        
+        json_data = request.get_json()
 
-            if not productId:
-                return ({'error': 'You must specify the id for product to modify'}), 400
+        new_name = json_data.get('name')
+        new_unit_price = json_data.get('unit_price')
+        new_quantity = json_data.get('quantity')
 
-            json_data = request.get_json()
+        if new_name:
+            Product.modify_product(productId, 'name', new_name)
 
-            new_name = json_data.get('name')
-            new_unit_price = json_data.get('unit_price')
-            new_quantity = json_data.get('quantity')
+        if new_unit_price:
+            Product.modify_product(productId, 'unit_price', new_unit_price)
 
-            if new_name:
-                Product.modify_product(productId, 'name', new_name)
+        if new_quantity:
+            Product.modify_product(productId, 'quantity', new_quantity)
 
-            if new_unit_price:
-                Product.modify_product(productId, 'unit_price', new_unit_price)
+        modified_product = Product.get_single_product(productId)
 
-            if new_quantity:
-                Product.modify_product(productId, 'quantity', new_quantity)
+        if not modified_product:
+            return jsonify({'error': 'The product you tried to modify does not exit.'}), 404
 
-            modified_product = Product.get_single_product(productId)
+        return jsonify(modified_product), 200
 
-            if not modified_product:
-                return jsonify({'error': 'The product you tried to modify does not exit.'}), 404
-
-            return jsonify(modified_product), 200
-
-        return jsonify({'error': 'Access to this resource is forbidden'}), 403
-    except:
-        return jsonify({'error': 'There was an error in trying to modify the product'}), 400
+    return jsonify({'error': 'Access to this resource is forbidden'}), 403
 
 #delete a product
 @api.route("/api/v2/products/<productId>", methods=['DELETE'])
 @jwt_required
 def delete_product(productId):
     """returns details of deleting a product """
-    try:
-        logged_in_user = get_jwt_identity()
-        if logged_in_user.get('role') == 'admin':
-            if not productId:
-                return jsonify({'error': 'You must specify the id for product to delete'}), 400
+    logged_in_user = get_jwt_identity()
+    if logged_in_user.get('role') == 'admin':
 
-            deleted_product = Product.delete_product(productId)
+        deleted_product = Product.delete_product(productId)
 
-            if not deleted_product:
-                return jsonify({'error': 'The product you tried to delete does not exist'}), 404
-                
-            return jsonify({'message': '{} was successfully deleted'.format(deleted_product)}), 200
+        if not deleted_product:
+            return jsonify({'error': 'The product you tried to delete does not exist'}), 404
+            
+        return jsonify({'message': '{} was successfully deleted'.format(deleted_product)}), 200
 
-        return jsonify({'error': 'Access to this resource is forbidden'}), 403
-    except:
-        return jsonify({'error': 'There was an error in trying to delete the product'}), 400
+    return jsonify({'error': 'Access to this resource is forbidden'}), 403
 
 #SALES
 #add new sale
@@ -230,21 +213,21 @@ def add_sale():
             if not sale_product_quantity:
                 return jsonify({'error': 'You need to provide a quantity for the product'}), 400
 
-            find_sale_product = Product.get_single_product(sale_product_id)
+            if sale_product_quantity < 0:
+                return jsonify({'error': 'Product quantity cannot be negative'}), 400
 
-            if not find_sale_product:
-                return jsonify({'error': 'Product does not exist. Please enter valid product id'}), 403
+            found_sale_product = Product.get_single_product(sale_product_id)
 
-            quantity_in_db = find_sale_product.get('quantity')
+            if not found_sale_product:
+                return jsonify({'error': 'Product does not exist. Please enter valid product id'}), 404
+
+            quantity_in_db = found_sale_product.get('quantity')
 
             if quantity_in_db == 0:
                 return jsonify({'error': 'There are no products to sell'}), 404
 
-            if sale_product_quantity < 0:
-                return jsonify({'error': 'Product quantity cannot be negative'}), 403
-
             if sale_product_quantity > quantity_in_db:
-                return jsonify({'error': 'The quantity you requested for is more than that in stock'}), 403
+                return jsonify({'error': 'The quantity you requested for is more than that in stock'}), 404
 
             updated_quantity = quantity_in_db - sale_product_quantity
             product_to_update = Product.get_single_product(sale_product_id)
@@ -253,7 +236,7 @@ def add_sale():
                 product_to_update_id = product_to_update.get('product_id')
                 Product.modify_product(product_to_update_id, 'quantity', updated_quantity)
 
-            total_sale_amount = sale_product_quantity * find_sale_product.get('unit_price')
+            total_sale_amount = sale_product_quantity * found_sale_product.get('unit_price')
 
             new_sale = Sale(product_to_update_id, sale_product_quantity,
                             total_sale_amount, logged_in_user.get('user_id'))
@@ -270,7 +253,7 @@ def add_sale():
                             }), 201
         return jsonify({'error': 'Access to this resource is forbidden'}), 403
     except:
-        return jsonify({'error': "There was an error in trying to add a new sale"}), 400
+        return jsonify({'error': 'There was an error in trying to add a new sale'}), 400
 
 #get a single sale
 @api.route("/api/v2/sales/<int:saleId>", methods=['GET'])

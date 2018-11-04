@@ -11,7 +11,6 @@ class DBHelper:
     def __init__(self, table_name, table_fields):
         self.table_name = table_name
         self.table_fields = table_fields
-        self.all_sales = []
         self.conn = DBHelper.open_connection()
         self.conn.autocommit = True
         self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
@@ -155,6 +154,61 @@ class DBHelper:
         deleted_name = self.cur.fetchone()
 
         return deleted_name
+
+    #methods for droping tables after running tests
+    def drop_users_test_table(self):
+        """drops the users table from the database"""
+        sql = """DROP TABLE users CASCADE"""
+        self.cur.execute(sql)
+
+    def drop_products_test_table(self):
+         """drops the products table from the database"""
+         sql = """DROP TABLE products CASCADE"""
+         self.cur.execute(sql)
+
+    def drop_sales_test_table(self):
+         """drops the sales table from the database"""
+         sql = """DROP TABLE sales CASCADE"""
+         self.cur.execute(sql)
+
+    #methods for creating tables after running tests
+    def create_users_test_table(self):
+        """creates the users table from the database"""
+        sql = """CREATE TABLE IF NOT EXISTS users(
+                user_id serial PRIMARY KEY,
+                email VARCHAR (100) UNIQUE NOT NULL,
+                password VARCHAR (200) NOT NULL,
+                role VARCHAR(20) NOT NULL,
+                date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );"""
+        self.cur.execute(sql)
+
+    def create_products_test_table(self):
+        """creates the products table from the database"""
+        sql = """CREATE TABLE IF NOT EXISTS products(
+                product_id serial PRIMARY KEY,
+                name VARCHAR (250) NOT NULL,
+                unit_price INT NOT NULL,
+                quantity INT NOT NULL,
+                date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );"""
+        self.cur.execute(sql)
+
+    def create_sales_test_table(self):
+        """creates the sales table from the database"""
+        sql = """CREATE TABLE IF NOT EXISTS sales(
+                sale_id serial PRIMARY KEY,
+                product_id INT NOT NULL, FOREIGN KEY (product_id) REFERENCES products(product_id),
+                quantity INT NOT NULL,
+                total_amount INT NOT NULL,
+                user_id INT NOT NULL, FOREIGN KEY (user_id) REFERENCES users(user_id),
+                date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                date_modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );"""
+        self.cur.execute(sql)
+    
 
     @staticmethod
     def open_connection():

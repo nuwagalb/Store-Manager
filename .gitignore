@@ -10,3 +10,5 @@ __pycache__/db_helper.cpython-36.pyc
 __pycache__/db_config.cpython-36.pyc
 __pycache__/app.cpython-36.pyc
 db_config.pyc
+.pytest_cache
+__pycache__/db_setup.cpython-36.pyc
