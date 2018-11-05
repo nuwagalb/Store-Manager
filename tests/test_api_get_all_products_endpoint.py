@@ -28,7 +28,7 @@ class GetAllProductsTestCase(unittest.TestCase):
 
 
     def test_that_authorized_user_can_successfully_get_all_product(self):
-        """tests that an authorized user can successfully get a single product"""
+        """tests that an authorized user can successfully get all product"""
         login_response = self.client.post('api/v2/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
@@ -68,12 +68,12 @@ class GetAllProductsTestCase(unittest.TestCase):
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        get_single_product_response = self.client.get('api/v2/products',
+        get_all_products_response = self.client.get('api/v2/products',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        data = json.loads(get_single_product_response.data)
-        self.assertEqual(get_single_product_response.status_code, 404)
+        data = json.loads(get_all_products_response.data)
+        self.assertEqual(get_all_products_response.status_code, 404)
         self.assertEqual(
             data['error'],
             'There are no products to fetch'

@@ -70,7 +70,7 @@ class ModifyProductTestCase(unittest.TestCase):
         self.assertEqual(modify_product_response.status_code, 404)
         self.assertEqual(
             data['error'],
-            'The product you tried to modify does not exit.'
+            'The product you tried to modify does not exsit.'
         )
 
     def test_that_a_sale_attendant_can_not_modify_a_product(self):

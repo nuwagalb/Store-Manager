@@ -167,7 +167,7 @@ def modify_product(productId):
         modified_product = Product.get_single_product(productId)
 
         if not modified_product:
-            return jsonify({'error': 'The product you tried to modify does not exit.'}), 404
+            return jsonify({'error': 'The product you tried to modify does not exsit.'}), 404
 
         return jsonify(modified_product), 200
 
@@ -260,30 +260,24 @@ def add_sale():
 @jwt_required
 def get_a_sale(saleId):
     """returns a single product"""
-    try:
-        result = Sale.get_single_sale(saleId)
+    result = Sale.get_single_sale(saleId)
 
-        if not result:
-            return jsonify({'error': 'The sale you are trying to fetch does not exist'}), 404
+    if not result:
+        return jsonify({'error': 'The sale you are trying to fetch does not exist'}), 404
 
-        return jsonify(result), 200
-    except:
-        return jsonify({'error':  'There was an error in trying to fetch the product'}), 400
+    return jsonify(result), 200
 
 #get all sales
 @api.route("/api/v2/sales", methods=['GET'])
 @jwt_required
 def get_all_sales():
     """returns all sales"""
-    try:
-        results = Sale.get_all_sales()
+    results = Sale.get_all_sales()
 
-        if not results:
-            return jsonify({'error': 'There are no sales to fetch'}), 404
+    if not results:
+        return jsonify({'error': 'There are no sales to fetch'}), 404
 
-        return jsonify(results), 200
-    except:
-        return jsonify({'error':  'There was an error in trying to fetch the products'}), 400
+    return jsonify(results), 200
 
 #ERROR HANDLERS
 @api.errorhandler(400)

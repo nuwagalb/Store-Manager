@@ -34,6 +34,10 @@ class AddSaleTestCase(unittest.TestCase):
         self.product_db.drop_products_test_table()
         self.product_db.create_products_test_table()
 
+        self.sale_db = DBHelper('sales', ['sale_id', 'product_id', 'quantity', 'total_amount', 'user_id'])
+        self.sale_db.drop_sales_test_table()
+        self.sale_db.create_sales_test_table()
+
     def test_sales_attendant_successfully_adds_a_new_sale(self):
         """tests that the sales attendant successfully adds a new sale"""
         login_response = self.client.post('api/v2/auth/login', content_type="application/json",
@@ -42,20 +46,19 @@ class AddSaleTestCase(unittest.TestCase):
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
-                                content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
-        
         add_product_response = self.client.post('api/v2/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        reg_response = self.client.post('api/v2/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
+        
+        attendant_login = self.client.post('api/v2/auth/login',
+                                content_type="application/json",
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -73,7 +76,7 @@ class AddSaleTestCase(unittest.TestCase):
         self.assertEqual(data['Total Amount of Sale'], 2000)
 
 
-    def test_that_the_admin_is_not_authorized_to_add_a_Sale(self):
+    def test_that_the_admin_is_not_authorized_to_add_a_sale(self):
         """tests for unauthorized access of the ADD SALE endpoint by the admin"""
         login_response = self.client.post('api/v2/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
@@ -110,8 +113,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -145,8 +147,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -175,8 +176,7 @@ class AddSaleTestCase(unittest.TestCase):
         
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -205,8 +205,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -240,8 +239,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -280,8 +278,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -318,8 +315,7 @@ class AddSaleTestCase(unittest.TestCase):
 
         attendant_login = self.client.post('api/v2/auth/login',
                                 content_type="application/json",
-                                data=json.dumps(self.sales_attendant),
-                                headers={'Authorization': 'Bearer {}'.format(token)})
+                                data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
@@ -339,6 +335,9 @@ class AddSaleTestCase(unittest.TestCase):
                 data['error'],
                 'Sale order could not be created'
             )
+        
+    
+    
 
     
 

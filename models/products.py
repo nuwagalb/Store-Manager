@@ -1,5 +1,4 @@
 from db_helper import DBHelper
-import json
 
 class Product:
     """Class that handles all the actions that can be performed
