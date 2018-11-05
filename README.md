@@ -4,7 +4,7 @@ in a single store
 
 
 #### Badges
-[![Build Status](https://travis-ci.org/nuwagalb/Store-Manager.svg?branch=develop)](https://travis-ci.org/nuwagalb/Store-Manager) [![Coverage Status](https://coveralls.io/repos/github/nuwagalb/Store-Manager/badge.svg?branch=develop)](https://coveralls.io/github/nuwagalb/Store-Manager?branch=develop)
+[![Build Status](https://travis-ci.org/nuwagalb/Store-Manager.svg?branch=develop)](https://travis-ci.org/nuwagalb/Store-Manager) [![Coverage Status](https://coveralls.io/repos/github/nuwagalb/Store-Manager/badge.svg?branch=develop)](https://coveralls.io/github/nuwagalb/Store-Manager?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/27f79698c2b829a29651/maintainability)](https://codeclimate.com/github/nuwagalb/Store-Manager/maintainability)
 
 #### project captures the following routes 
 
@@ -20,7 +20,6 @@ in a single store
 | GET | api/v1/sales/<_saleId_> | Get a sale |
 | GET | api/v1/sales | Get all sales |
 | GET | api/v1/products | Get all products |
-| 
 
 #### Technologies and Tools used to develop this App
 
