@@ -36,44 +36,44 @@ class GetAllUserSalesTestCase(unittest.TestCase):
 
     def test_that_the_admin_can_successfully_get_all_sales_by_a_given_user(self):
         """tests that an admin can successfully get all sales by a given user"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response_one = self.client.post('api/v2/products',
+        add_product_response_one = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        add_product_response_two = self.client.post('api/v2/products',
+        add_product_response_two = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_2_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_one_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_one_login = self.client.post('api/v1/auth/login', content_type="application/json",
                                     data=json.dumps(self.sales_attendant))
 
         attendant_one_data = json.loads(attendant_one_login.data)
         attendant_one_token = attendant_one_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sale),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_one_token)})
 
-        add_sale_response_two = self.client.post('api/v2/sales',
+        add_sale_response_two = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sale_2),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_one_token)})
 
-        get_all_sales_by_attendant_one = self.client.get('api/v2/sales/users/2',
+        get_all_sales_by_attendant_one = self.client.get('api/v1/sales/users/2',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -92,13 +92,13 @@ class GetAllUserSalesTestCase(unittest.TestCase):
     
     def test_that_an_error_message_is_raised_when_getting_sales_for_a_none_existent_user(self):
         """tests that an error message is raised on getting sales of a none existent user"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        get_all_sales_by_attendant_one = self.client.get('api/v2/sales/users/2',
+        get_all_sales_by_attendant_one = self.client.get('api/v1/sales/users/2',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -111,13 +111,13 @@ class GetAllUserSalesTestCase(unittest.TestCase):
 
     def test_that_an_error_message_is_raised_when_specified_user_has_no_sale_records(self):
         """tests that an error message is raised on getting sales by a user who has no sales"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        get_all_sales_by_attendant_one = self.client.get('api/v2/sales/users/1',
+        get_all_sales_by_attendant_one = self.client.get('api/v1/sales/users/1',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -130,24 +130,24 @@ class GetAllUserSalesTestCase(unittest.TestCase):
 
     def test_that_an_attendant_is_not_authorized_to_access_this_endpoint(self):
         """tests that an attendant cannot access this endpoint"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_login = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.sales_attendant))
         
         attendant_data = json.loads(attendant_login.data)
         attendant_token = attendant_data['token']
              
-        get_all_sales_by_attendant = self.client.get('api/v2/sales/users/3',
+        get_all_sales_by_attendant = self.client.get('api/v1/sales/users/3',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
 

@@ -40,30 +40,30 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_sales_attendant_successfully_adds_a_new_sale(self):
         """tests that the sales attendant successfully adds a new sale"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -78,13 +78,13 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_that_the_admin_is_not_authorized_to_add_a_sale(self):
         """tests for unauthorized access of the ADD SALE endpoint by the admin"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -95,30 +95,30 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_that_error_message_is_raised_when_no_product_id_value_is_specified_for_a_given_sale(self):
         """tests that an error message is raised when a product to sale is not specified"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.missing_product_id_value),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -129,30 +129,30 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_that_error_message_is_raised_when_no_quantity_value_is_specified_for_a_given_sale(self):
         """tests that an error message is raised when a product to sale is not specified"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.missing_quantity_value),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -163,25 +163,25 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_that_sale_quantity_value_can_not_be_negative(self):
         """tests that sale quantity cannot be negative"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.negative_sale_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -192,25 +192,25 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_error_message_is_raised_when_trying_to_create_a_sale_for_a_none_existant_product(self):
         """tests for error on trying to create a sale for a none existant product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -221,35 +221,35 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_error_message_is_raised_when_quantity_to_make_sale_for_is_out_of_stock(self):
         """tests for trying to sale quantity that is out of stock"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details_two),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
 
-        add_sale_response_two = self.client.post('api/v2/sales',
+        add_sale_response_two = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details_two),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -260,30 +260,30 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_for_an_error_message_when_quantity_requested_for_is_more_than_that_in_stock(self):
         """tests that quantity requested for cannot be greater than that in stock"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.excess_sale_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -297,30 +297,30 @@ class AddSaleTestCase(unittest.TestCase):
 
     def test_error_message_is_raised_when_new_sale_details_are_not_inserted_in_the_database(self):
         """tests that adding a sale raises an error if record is not inserted in the database"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login',
+        attendant_login = self.client.post('api/v1/auth/login',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token =  attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sales_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})

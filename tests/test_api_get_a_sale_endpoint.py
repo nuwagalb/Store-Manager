@@ -34,34 +34,34 @@ class GetSingleSaleTestCase(unittest.TestCase):
 
     def test_that_authorized_user_can_successfully_get_a_single_sale(self):
         """tests that an authorized user can successfully get a single sale"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_login = self.client.post('api/v1/auth/login', content_type="application/json",
                                     data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token = attendant_data['token']
 
-        add_sale_response = self.client.post('api/v2/sales',
+        add_sale_response = self.client.post('api/v1/sales',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_sale),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
         
-        get_single_sale_response = self.client.get('api/v2/sales/1',
+        get_single_sale_response = self.client.get('api/v1/sales/1',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})
 
@@ -75,13 +75,13 @@ class GetSingleSaleTestCase(unittest.TestCase):
 
     def test_that_an_error_message_is_raised_when_getting_a_none_existent_sale(self):
         """tests that an error message is raised on getting a none existent sale"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        get_single_sale_response = self.client.get('api/v2/sales/1',
+        get_single_sale_response = self.client.get('api/v1/sales/1',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 

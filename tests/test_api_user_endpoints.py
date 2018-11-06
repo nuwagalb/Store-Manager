@@ -33,7 +33,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_invalid_email_address_on_login(self):
         """tests for an invalid email given on login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.invalid_user_email))
         
         data = json.loads(login_response.data)
@@ -46,7 +46,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_invalid_password_on_login(self):
         """tests for an invalid password given on login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.invalid_user_password))
         
         data = json.loads(login_response.data)
@@ -58,7 +58,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_successfull_login(self):
         """tests for successful user login"""
-        login_response = self.client.post('/api/v2/auth/login', content_type='application/json',
+        login_response = self.client.post('/api/v1/auth/login', content_type='application/json',
                         data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
@@ -71,13 +71,13 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_store_attendant_account_is_successfully_created(self):
         """tests that an attendant is successfully created"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -90,18 +90,18 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_error_message_is_returned_on_duplicate_registration_of_an_attendant(self):
         """test for duplicate registration"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        reg_response_one = self.client.post('api/v2/auth/signup',
+        reg_response_one = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        reg_response_two = self.client.post('api/v2/auth/signup',
+        reg_response_two = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -115,24 +115,24 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_user_without_admin_rights_cannot_create_new_sales_attendants_account(self):
         """tests for unauthorized access of sinup method by the store attendant"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_login = self.client.post('api/v1/auth/login', content_type="application/json",
                                     data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token = attendant_data['token'] 
 
-        attendant_registration_attempt = self.client.post('api/v2/auth/signup', 
+        attendant_registration_attempt = self.client.post('api/v1/auth/signup', 
                                     content_type="application/json",
                                     data=json.dumps(self.sales_attendant),
                                     headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -146,7 +146,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_missing_email_key_on_attempt_to_login(self):
         """tests for a missing email key when user attempts to login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.missing_email_key))
         data = json.loads(login_response.data)
         self.assertEqual(login_response.status_code, 400)
@@ -154,7 +154,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_missing_password_key_on_attempt_to_login(self):
         """tests for a missing password key when user attempts to login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.missing_password_key))
         data = json.loads(login_response.data)
         self.assertEqual(login_response.status_code, 400)
@@ -162,7 +162,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_missing_email_value_on_attempt_to_login(self):
         """tests for a missing email value when user attempts to login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.missing_email_value))
         data = json.loads(login_response.data)
         self.assertEqual(login_response.status_code, 400)
@@ -170,7 +170,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_missing_password_value_on_attempt_to_login(self):
         """tests for a missing password value when user attempts to login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.missing_password_value))
         data = json.loads(login_response.data)
         self.assertEqual(login_response.status_code, 400)
@@ -178,7 +178,7 @@ class APIUserTestCase(unittest.TestCase):
 
     def test_for_empty_string_as_value_for_email(self):
         """tests for an empty email when user attempts to login"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.empty_string))
         data = json.loads(login_response.data)
         self.assertEqual(login_response.status_code, 400)

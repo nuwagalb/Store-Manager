@@ -30,18 +30,18 @@ class ModifyProductTestCase(unittest.TestCase):
 
     def test_that_an_admin_can_successfully_modify_a_product(self):
         """tests that an admin can successfully modify a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})        
         
-        modify_product_response = self.client.put('api/v2/products/1',
+        modify_product_response = self.client.put('api/v1/products/1',
                                 content_type="application/json",
                                 data=json.dumps(self.modify_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -55,13 +55,13 @@ class ModifyProductTestCase(unittest.TestCase):
 
     def test_that_an_error_message_is_raised_when_trying_to_modify_a_none_existent_product(self):
         """tests that an error message is raised on trying to modify none existent product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']       
         
-        modify_product_response = self.client.put('api/v2/products/1',
+        modify_product_response = self.client.put('api/v1/products/1',
                                 content_type="application/json",
                                 data=json.dumps(self.modify_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -75,24 +75,24 @@ class ModifyProductTestCase(unittest.TestCase):
 
     def test_that_a_sale_attendant_can_not_modify_a_product(self):
         """tests that a sale attendant has no access to modify a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                             content_type="application/json",
                             data=json.dumps(self.sales_attendant),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_login = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token = attendant_data['token']
                        
-        modify_product_response = self.client.put('api/v2/products/1',
+        modify_product_response = self.client.put('api/v1/products/1',
                                 content_type="application/json",
                                 data=json.dumps(self.modify_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(attendant_token)})

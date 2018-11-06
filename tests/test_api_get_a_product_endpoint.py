@@ -29,18 +29,18 @@ class GetSingleProductTestCase(unittest.TestCase):
 
     def test_that_authorized_user_can_successfully_get_a_single_product(self):
         """tests that an authorized user can successfully get a single product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})        
         
-        get_single_product_response = self.client.get('api/v2/products/1',
+        get_single_product_response = self.client.get('api/v1/products/1',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -54,13 +54,13 @@ class GetSingleProductTestCase(unittest.TestCase):
 
     def test_that_an_error_message_is_raised_when_getting_a_non_existent_product(self):
         """tests that an error message is raised on getting a none existent product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        get_single_product_response = self.client.get('api/v2/products/1',
+        get_single_product_response = self.client.get('api/v1/products/1',
                                 content_type="application/json",
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 

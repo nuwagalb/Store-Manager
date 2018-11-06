@@ -35,13 +35,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_admin_successfully_adds_a_new_product(self):
         """tests that the admin successfully adds a new product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        add_product_response = self.client.post('api/v2/products',
+        add_product_response = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -55,18 +55,18 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_duplicate_entry_of_a_product(self):
         """tests that error message is raised when trying to enter add a product that already exists"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        add_product_response_once = self.client.post('api/v2/products',
+        add_product_response_once = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        add_product_response_twice = self.client.post('api/v2/products',
+        add_product_response_twice = self.client.post('api/v1/products',
                                 content_type="application/json",
                                 data=json.dumps(self.valid_product_details),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
@@ -77,24 +77,24 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_that_store_attendant_can_not_add_a_product(self):
         """tests that a store attendant cannot add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']        
         
-        reg_response = self.client.post('api/v2/auth/signup',
+        reg_response = self.client.post('api/v1/auth/signup',
                                 content_type="application/json",
                                 data=json.dumps(self.sales_attendant),
                                 headers={'Authorization': 'Bearer {}'.format(token)})
 
-        attendant_login = self.client.post('api/v2/auth/login', content_type="application/json",
+        attendant_login = self.client.post('api/v1/auth/login', content_type="application/json",
                                     data=json.dumps(self.sales_attendant))
 
         attendant_data = json.loads(attendant_login.data)
         attendant_token = attendant_data['token'] 
 
-        attendant_add_product_attempt = self.client.post('api/v2/products', 
+        attendant_add_product_attempt = self.client.post('api/v1/products', 
                                     content_type="application/json",
                                     data=json.dumps(self.valid_product_details),
                                     headers={'Authorization': 'Bearer {}'.format(attendant_token)})
@@ -108,13 +108,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_name_key_on_attempt_to_add_a_product(self):
         """tests for a missing name key when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_name_key),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -124,13 +124,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_unit_price_key_on_attempt_to_add_a_product(self):
         """tests for a missing unit price key when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_unit_price_key),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -140,13 +140,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_quantity_key_on_attempt_to_add_a_product(self):
         """tests for a missing quantity key when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_quantity_key),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -156,13 +156,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_name_value_on_attempt_to_add_a_product(self):
         """tests for a missing name value when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_name_value),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -172,13 +172,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_unit_price_value_on_attempt_to_add_a_product(self):
         """tests for a missing unit price value when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_unit_price_value),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 
@@ -188,13 +188,13 @@ class AddProductTestCase(unittest.TestCase):
 
     def test_for_missing_quantity_value_on_attempt_to_add_a_product(self):
         """tests for a missing quantity value when user attempts to add a product"""
-        login_response = self.client.post('api/v2/auth/login', content_type="application/json",
+        login_response = self.client.post('api/v1/auth/login', content_type="application/json",
                             data=json.dumps(self.valid_user_details))
 
         login_data = json.loads(login_response.data)
         token = login_data['token']
 
-        add_product_response = self.client.post('api/v2/products', content_type="application/json",
+        add_product_response = self.client.post('api/v1/products', content_type="application/json",
                             data=json.dumps(self.missing_quantity_value),
                             headers={'Authorization': 'Bearer {}'.format(token)})
 

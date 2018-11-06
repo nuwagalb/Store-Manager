@@ -23,7 +23,7 @@ def index():
 
     return jsonify('Hello World')
 
-@api.route("/api/v2/auth/login", methods=["POST"])
+@api.route("/api/v1/auth/login", methods=["POST"])
 def login():
     """logs in a user"""
     try:
@@ -55,7 +55,7 @@ def login():
         return jsonify({'error': 'An error occured in trying to login the user'}), 400
 
 
-@api.route("/api/v2/auth/signup", methods=["POST"])
+@api.route("/api/v1/auth/signup", methods=["POST"])
 @jwt_required
 def register():
     """signs up a user"""    
@@ -92,7 +92,7 @@ def register():
 
 #PRODUCTS
 #add new product
-@api.route("/api/v2/products", methods=['POST'])
+@api.route("/api/v1/products", methods=['POST'])
 @jwt_required
 def add_product():
     """adds new product"""
@@ -121,7 +121,7 @@ def add_product():
         return jsonify({'error': 'There was an error in trying to add a product'}), 400
 
 #get a single product
-@api.route("/api/v2/products/<int:productId>", methods=['GET'])
+@api.route("/api/v1/products/<int:productId>", methods=['GET'])
 @jwt_required
 def get_a_product(productId):
     """returns a single product"""
@@ -133,7 +133,7 @@ def get_a_product(productId):
     return jsonify(product_status), 200
 
 #get all product
-@api.route("/api/v2/products", methods=['GET'])
+@api.route("/api/v1/products", methods=['GET'])
 @jwt_required
 def get_all_products():
     """returns all products"""
@@ -145,7 +145,7 @@ def get_all_products():
     return jsonify(product_status), 200
 
 #get modify a product
-@api.route("/api/v2/products/<productId>", methods=['PUT'])
+@api.route("/api/v1/products/<productId>", methods=['PUT'])
 @jwt_required
 def modify_product(productId):
     """returns the modified product"""
@@ -177,7 +177,7 @@ def modify_product(productId):
     return jsonify({'error': 'Access to this resource is forbidden'}), 403
 
 #delete a product
-@api.route("/api/v2/products/<productId>", methods=['DELETE'])
+@api.route("/api/v1/products/<productId>", methods=['DELETE'])
 @jwt_required
 def delete_product(productId):
     """returns details of deleting a product """
@@ -195,7 +195,7 @@ def delete_product(productId):
 
 #SALES
 #add new sale
-@api.route("/api/v2/sales", methods=['POST'])
+@api.route("/api/v1/sales", methods=['POST'])
 @jwt_required
 def add_sale():
     """adds new sale"""
@@ -259,7 +259,7 @@ def add_sale():
         return jsonify({'error': 'There was an error in trying to add a new sale'}), 400
 
 #get a single sale
-@api.route("/api/v2/sales/<int:saleId>", methods=['GET'])
+@api.route("/api/v1/sales/<int:saleId>", methods=['GET'])
 @jwt_required
 def get_a_sale(saleId):
     """returns a single product"""
@@ -271,7 +271,7 @@ def get_a_sale(saleId):
     return jsonify(result), 200
 
 #get all sales
-@api.route("/api/v2/sales", methods=['GET'])
+@api.route("/api/v1/sales", methods=['GET'])
 @jwt_required
 def get_all_sales():
     """returns all sales"""
@@ -283,7 +283,7 @@ def get_all_sales():
     return jsonify(results), 200
 
 #get all sales by specific attendant
-@api.route("/api/v2/sales/users/<int:userId>", methods=['GET'])
+@api.route("/api/v1/sales/users/<int:userId>", methods=['GET'])
 @jwt_required
 def get_specific_user_sales(userId):
     """returns sales for a specific user"""
