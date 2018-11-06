@@ -119,6 +119,20 @@ class DBHelper:
         results = self.cur.fetchall()
 
         return results
+
+    def find_all_user_records(self, user_id):
+        """finds all records by a given user"""
+        sql = """SELECT * 
+                 FROM {}
+                 WHERE {} = {}
+              """.format(
+                  self.table_name,
+                  self.table_fields[-1],
+                  user_id)
+        self.cur.execute(sql)
+        results = self.cur.fetchall()
+
+        return results
         
     def update_record(self, field_name, name_value, field_id, id_value):
         """updates a records's name"""

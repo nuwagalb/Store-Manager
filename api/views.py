@@ -13,12 +13,15 @@ api = Flask(__name__)
 
 api.config['JWT_SECRET_KEY'] = '89#456612dfmrprkp'
 
-os.environ['DATABASE_URL'] = 'postgres://ayismiynoayaqa:4aa137351e4c1da6449f \
-                             aa235879ca0f8d4403311c4638e11b79f89963329ac4@ec2- \
-                             184-73-169-151.compute-1.amazonaws.com:5432/d52fe7v\
-                             tm6hiqf'
-
 jwt = JWTManager(api)
+
+@api.route("/")
+def index():
+    """initial route for application"""
+    if os.environ.get('DATABASE_URL') == 'heroku':
+        return jsonify(os.environ['DATABASE_URL'])
+
+    return jsonify('Hello World')
 
 @api.route("/api/v2/auth/login", methods=["POST"])
 def login():
@@ -278,6 +281,26 @@ def get_all_sales():
         return jsonify({'error': 'There are no sales to fetch'}), 404
 
     return jsonify(results), 200
+
+#get all sales by specific attendant
+@api.route("/api/v2/sales/users/<int:userId>", methods=['GET'])
+@jwt_required
+def get_specific_user_sales(userId):
+    """returns sales for a specific user"""
+    logged_in_user = get_jwt_identity()
+    if logged_in_user.get('role') == 'admin':
+        user = User.find_user_by_id(userId)
+        if not user:
+            return jsonify({'error': 'Specified user does not exist in the database'}), 404
+
+        results = Sale.get_sales_by_user(userId)
+
+        if not results:
+            return jsonify({'error': 'There are no sales for the specified user'}), 404
+
+        return jsonify(results), 200
+
+    return jsonify({'error': 'Access to this resource is forbidden'}), 403
 
 #ERROR HANDLERS
 @api.errorhandler(400)

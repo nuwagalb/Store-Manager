@@ -42,7 +42,20 @@ class Sale:
     def get_all_sales():
         """get all available sales"""
         db = DBHelper('sales', ['sale_id', 'product_id', 'quantity', 'total_amount', 'user_id'])
-        results = db.find_all_records()
+        sales = db.find_all_records()
         
-        return results
+        return sales
+
+    @staticmethod
+    def get_sales_by_user(user_id):
+        """gets all available sales by a given user"""
+        db = DBHelper('sales', ['sale_id', 'product_id', 'quantity', 'total_amount', 'user_id'])
+        sales = db.find_all_user_records(user_id)
+
+        if not sales:
+            return []
+
+        return sales
+
+        
         

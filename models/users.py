@@ -44,4 +44,15 @@ class User:
             return self.db.find_record_by_id(inserted_id)
 
         return {}
+
+    @staticmethod
+    def find_user_by_id(user_id):
+        """finds a user by their user id"""
+        db = DBHelper('users', ['user_id', 'email', 'password', 'role'])
+        result = db.find_record_by_id(user_id)
+
+        if not result:
+            return {}
+
+        return result
         
