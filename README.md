@@ -20,6 +20,7 @@ in a single store
 | GET | api/v1/sales/<_saleId_> | Get a sale |
 | GET | api/v1/sales | Get all sales |
 | GET | api/v1/products | Get all products |
+| GET | api/v1/sales/users<_userId_> | Get all sales by a given user |
 
 #### Technologies and Tools used to develop this App
 
